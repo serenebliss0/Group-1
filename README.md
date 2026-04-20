@@ -1,2 +1,3 @@
-# Group-1
-What's our app nameeee???
+
+# 🎨 Design
+[Figma File](https://figma.com/your-link)

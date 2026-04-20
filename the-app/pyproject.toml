@@ -1,0 +1,20 @@
+[project]
+name = "the-ruin-and-the-green"
+version = "0.1.0"
+description = "A story-based game"
+authors = [
+    { name = "Oluwasemire Ajayi" }
+    { name = "Kamsiyochi Ekenulo" }
+    { name = "Joseph Nnabueze" }
+    { name = "Chimdike Agugoesi" }
+    { name = "Chianugo Onyia " }
+    { name = "Oluwasemire Ajayi" }
+    { name = "Marvelous Moses-Okorie" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = []
+
+[project.scripts]
+ruin-game = "the_ruin_and_the_green.main:main"
