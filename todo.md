@@ -61,5 +61,15 @@ git pull
 ### Stuff
 
 - Setting up a python virtual environment (venv)
+
+```bash
+python -m venv venv
+```
+
 - CustomTkinkter
 -Pillow
+
+```bash
+git checkout your-branch
+git pull origin main
+```
