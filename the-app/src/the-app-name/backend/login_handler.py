@@ -1,6 +1,9 @@
 import bcrypt
 import sys
 import os
+from .logger import get_logger 
+
+logger = get_logger("Login Handler")
 
 # Ensuring the backend path is accessible
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -10,11 +13,18 @@ class LoginHandler:
     def __init__(self, db_instance):
         #store the database connection here so the class can use it
         self.db = db_instance
+        logger.info("Database obj was passed to loginhandler successfully")
 
+        
     def hash_password(self, password: str) -> str:
-        byte_password = password.encode('utf-8')
-        pw_hash = bcrypt.hashpw(byte_password, bcrypt.gensalt())
-        return pw_hash.decode('utf-8')
+        try:
+            byte_password = password.encode('utf-8')
+            pw_hash = bcrypt.hashpw(byte_password, bcrypt.gensalt())
+            logger.info("A password hash was created")
+            return pw_hash.decode('utf-8')
+        except Exception as e:
+            logger.error("Attempt to hash password failed: {e}")
+            return "Error"
 
     def check_password(self, password: str, hashed: str) -> bool:
         if not hashed:

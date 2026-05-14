@@ -4,7 +4,7 @@ from backend import login_handler, database
 db_conn = database.Database()
 handler = login_handler.LoginHandler(db_conn) # Instantiate the class and pass in the db_conn object
 
-class LoginScreen(tk.Frame):
+class SignupScreen(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent, bg="#0d0800")
         self.controller = controller
@@ -49,33 +49,16 @@ class LoginScreen(tk.Frame):
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
 
-        stored_hash = handler.db.get_password_hash(username)
-
         if not username or not password:
             self.feedback.config(text="please fill in all fields.")
             return
 
-            # Use the handler to get the hash
-        stored_hash = handler.db.get_password_hash(username)
-
-    # Call the method via the 'handler' instance
-        if not stored_hash:
-            self.feedback.config(text="user not found.")
-            return
-
-            # check password
-        success = handler.check_password(password, stored_hash)
-
+        success = handler.check_password(username, password)
         if success:
-            self.feedback.config(text="login successful.")
             self.controller.current_user = username
-        # stop intro music later here if needed
-        # self.controller.audio.stop()
-            self.controller.show_frame("GameScreen")
+            self.controller.show_frame("GameScreen")  # change to whatever your next screen is
         else:
             self.feedback.config(text="invalid username or password.")
-
-
 
 if __name__ == "__main__":
     root = tk.Tk()

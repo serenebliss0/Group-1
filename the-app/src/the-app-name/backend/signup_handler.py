@@ -1,10 +1,12 @@
 import bcrypt
 import sys
 import os
+from backend.database import Database
+from .logger import get_logger 
 
+logger = get_logger("Signup Handler")
 # Ensuring the backend path is accessible
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from backend.database import Database
 
 class SignupHandler: 
     def __init__(self, db_instance):
