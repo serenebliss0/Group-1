@@ -1,10 +1,12 @@
 import bcrypt
 import sys
 import os
+from backend.database import Database
+from .logger import get_logger 
 
+logger = get_logger("Signup Handler")
 # Ensuring the backend path is accessible
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from backend.database import Database
 
 class SignupHandler: 
     def __init__(self, db_instance):
@@ -30,9 +32,13 @@ class SignupHandler:
         #Hash the password
         hashed_pw = self.hash_password(password)
 
+        if username == "omori":
+            pass
         # 3. Store in the database
         success = self.db.create_user(username, hashed_pw)
         return success
+    
+            
 
 # Logic test
 # only run when this file is specifically run
@@ -45,6 +51,6 @@ if __name__ == "__main__":
     new_pass = input('Choose a password: ')
 
     if handler.register_user(new_user, new_pass):
-        print(f"Registration successful for {new_user}!")
+        logger.info(f"Registration successful for {new_user}!")
     else:
-        print("Registration failed.")
+        logger.error("Registration failed.")
