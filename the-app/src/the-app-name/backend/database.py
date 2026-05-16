@@ -89,7 +89,7 @@ class Database:
                 (limit,) #the command expects a tuple, that's why I used it here
             )
             logger.info("Pulled user's best scores locally")
-            return [dict(row) for row in cursor.fetchall()]
+            return [dict(row) for row in cursor.fetchall()] or []
         
         except Exception as e:
             logger.error(f"Unable to fetch local top scores: {e}")
@@ -114,7 +114,7 @@ class Database:
                 "SELECT scenario, choice_key, delta FROM choices WHERE run_id = ? ORDER BY scenario",
                 (run_id,)
             )
-            return [dict(row) for row in cursor.fetchall()]
+            return [dict(row) for row in cursor.fetchall()] or []
         except Exception as e:
             logger.error("Failed to receive choices from DB: {e}")
     
