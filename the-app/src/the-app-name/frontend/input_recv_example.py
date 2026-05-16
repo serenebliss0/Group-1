@@ -35,6 +35,9 @@ def move_player(event):
     elif key == keybinds["move_right"]:
         player_x += 10
 
+    elif key == keybinds["interact"]:
+        canvas.itemconfig(player, fill="red")
+
     canvas.coords(
         player,
         player_x,

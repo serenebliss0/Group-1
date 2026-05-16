@@ -18,7 +18,7 @@ class LoginScreen(tk.Frame):
         # Username
         tk.Label(self, text="USERNAME", bg="#0d0800", fg="#b8a99a",
                 font=("Courier", 8)).pack()
-        self.username_entry = tk.Entry(self, bg="#1a0a00", fg="#f5ead8",
+        self.username_entry = tk.Entry(self, bg="#c1c1c1", fg="#f5ead8",
             insertbackground="#f5ead8", font=("Courier", 11),
             relief="flat", width=30)
         self.username_entry.pack(pady=(4, 16), ipady=6)
@@ -26,7 +26,7 @@ class LoginScreen(tk.Frame):
         # Password
         tk.Label(self, text="PASSWORD", bg="#0d0800", fg="#b8a99a",
                 font=("Courier", 8)).pack()
-        self.password_entry = tk.Entry(self, bg="#1a0a00", fg="#f5ead8",
+        self.password_entry = tk.Entry(self, bg="#c1c1c1", fg="#f5ead8",
                                         insertbackground="#f5ead8", font=("Courier", 11),
                                         relief="flat", width=30, show="*")
         self.password_entry.pack(pady=(4, 24), ipady=6)
@@ -45,7 +45,7 @@ class LoginScreen(tk.Frame):
             font=("Courier", 9), relief="flat", width=20,
             command=lambda: controller.show_frame("SignupScreen")).pack(ipady=6)
         
-        tk.Button(self, text="CREATE ACCOUNT", bg="#1a0a00", fg="#b8a99a",
+        tk.Button(self, text="I forgot my name", bg="#1a0a00", fg="#b8a99a",
                 font=("Courier", 9), relief="flat", width=20,
                 command=lambda: controller.show_frame("SignupScreen")).pack(ipady=6)
 
