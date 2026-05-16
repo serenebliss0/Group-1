@@ -80,6 +80,8 @@ pip freeze > requirements.txt
 
 ## How to run the code
 
+[![Watch the video]](external/how_to_run.mp4)
+
 By now you should've tried running the code by clicking that shiny run button up in VSCode just to be hit with `Error: Module not found`. Due to our repo being structured as a python package for later, you'll need to run it a bit differently:
 
 - If you haven't already, create your python virtual environment (venv)

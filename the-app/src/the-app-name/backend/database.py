@@ -89,7 +89,7 @@ class Database:
                 (limit,) #the command expects a tuple, that's why I used it here
             )
             logger.info("Pulled user's best scores locally")
-            return [dict(row) for row in cursor.fetchall()]
+            return [dict(row) for row in cursor.fetchall()] or []
         
         except Exception as e:
             logger.error(f"Unable to fetch local top scores: {e}")
@@ -114,7 +114,7 @@ class Database:
                 "SELECT scenario, choice_key, delta FROM choices WHERE run_id = ? ORDER BY scenario",
                 (run_id,)
             )
-            return [dict(row) for row in cursor.fetchall()]
+            return [dict(row) for row in cursor.fetchall()] or []
         except Exception as e:
             logger.error("Failed to receive choices from DB: {e}")
     
@@ -147,9 +147,12 @@ class Database:
 
 class Leaderboard:
     def __init__(self):
+
+        url ="https://lyoccpevhprftrknyuzf.supabase.co"
+        key="sb_publishable_BO21GbbCvdcinxSUCKkzNw_i9h75QFx"
         try:
-            url = os.getenv("SUPABASE_URL")
-            key = os.getenv("SUPABASE_KEY")
+            url = os.getenv("SUPABASE_URL", "https://lyoccpevhprftrknyuzf.supabase.co")
+            key = os.getenv("SUPABASE_KEY", "sb_publishable_BO21GbbCvdcinxSUCKkzNw_i9h75QFx")
         except Exception as e:
             logger.error(f"Unable to retrieve api key from env. Do you have your keys in .env?\n{e}")
         
