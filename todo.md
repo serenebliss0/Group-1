@@ -88,17 +88,27 @@ By now you should've tried running the code by clicking that shiny run button up
 python -m venv venv
 ```
 
-- Make sure you're in the correct directory
+- Initialize your venv
 
-```Powershell
-cd the-app/src/the-app-name
+```python
+venv/Scripts/activate
 ```
+
+You should see (venv) in your terminal
 
 - Now ensure you've installed all the dependencies in requirements.txt
 
 ```Powershell
 pip install -r requirements.txt
 ```
+
+- Make sure you're in the correct directory
+
+```Powershell
+cd the-app/src/the-app-name
+```
+
+
 
 - Now you can run code by specifying its filename
 
