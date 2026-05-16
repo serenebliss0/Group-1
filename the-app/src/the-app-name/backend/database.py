@@ -147,9 +147,12 @@ class Database:
 
 class Leaderboard:
     def __init__(self):
+
+        url ="https://lyoccpevhprftrknyuzf.supabase.co"
+        key="sb_publishable_BO21GbbCvdcinxSUCKkzNw_i9h75QFx"
         try:
-            url = os.getenv("SUPABASE_URL")
-            key = os.getenv("SUPABASE_KEY")
+            url = os.getenv("SUPABASE_URL", "https://lyoccpevhprftrknyuzf.supabase.co")
+            key = os.getenv("SUPABASE_KEY", "sb_publishable_BO21GbbCvdcinxSUCKkzNw_i9h75QFx")
         except Exception as e:
             logger.error(f"Unable to retrieve api key from env. Do you have your keys in .env?\n{e}")
         
