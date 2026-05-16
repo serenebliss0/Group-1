@@ -9,9 +9,10 @@ class MainApp(tk.Tk):
         super().__init__()
         self.title("The Ruin and the Green")
 
-        scale = 0.8
-        self.width = int(self.winfo_screenwidth() * scale)
-        self.height = int(self.winfo_screenheight() * scale)
+        #calculate the window size to be responsive to different devices
+        self.scale = 0.8
+        self.width = int(self.winfo_screenwidth() * self.scale)
+        self.height = int(self.winfo_screenheight() * self.scale)
         self.geometry(f"{self.width}x{self.height}")
 
         self.db = database.Database()

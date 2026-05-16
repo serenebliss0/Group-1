@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     # Call the method via the 'handler' instance
     if handler.check_password(pass_input, stored_hash):
-        print("Login successful")
+        logger.info("Login successful")
     else:
-        print("Invalid username or password")
+        logger.error("Invalid username or password")
 
