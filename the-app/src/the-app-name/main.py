@@ -19,8 +19,8 @@ class MainApp(tk.Tk):
         self.current_user = None
 
         #init audio ONCE here
-        self.mixer = logic.Mixer()
-        self.mixer.play_intro_sound()
+       # self.mixer = logic.Mixer()
+        #self.mixer.play_intro_sound()
 
         self.container = tk.Frame(self)
         self.container.pack(fill="both", expand=True)

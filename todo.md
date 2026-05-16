@@ -73,3 +73,53 @@ python -m venv venv
 git checkout your-branch
 git pull origin main
 ```
+
+```python
+pip freeze > requirements.txt
+```
+
+## How to run the code
+
+By now you should've tried running the code by clicking that shiny run button up in VSCode just to be hit with `Error: Module not found`. Due to our repo being structured as a python package for later, you'll need to run it a bit differently:
+
+- If you haven't already, create your python virtual environment (venv)
+
+``` Powershell
+python -m venv venv
+```
+
+- Make sure you're in the correct directory
+
+```Powershell
+cd the-app/src/the-app-name
+```
+
+- Now ensure you've installed all the dependencies in requirements.txt
+
+```Powershell
+pip install -r requirements.txt
+```
+
+- Now you can run code by specifying its filename
+
+```python
+python -m main
+```
+
+This runs main.py
+
+```python
+python -m backend.database
+```
+
+This runs database.py
+
+```python
+python -m frontend.login
+```
+
+This displays the login page
+
+---
+
+p.s the `-m` means run as module

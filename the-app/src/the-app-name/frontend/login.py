@@ -19,13 +19,13 @@ class LoginScreen(tk.Frame):
         tk.Label(self, text="USERNAME", bg="#0d0800", fg="#b8a99a",
                 font=("Courier", 8)).pack()
         self.username_entry = tk.Entry(self, bg="#1a0a00", fg="#f5ead8",
-                                       insertbackground="#f5ead8", font=("Courier", 11),
-                                       relief="flat", width=30)
+            insertbackground="#f5ead8", font=("Courier", 11),
+            relief="flat", width=30)
         self.username_entry.pack(pady=(4, 16), ipady=6)
 
         # Password
         tk.Label(self, text="PASSWORD", bg="#0d0800", fg="#b8a99a",
-                 font=("Courier", 8)).pack()
+                font=("Courier", 8)).pack()
         self.password_entry = tk.Entry(self, bg="#1a0a00", fg="#f5ead8",
                                         insertbackground="#f5ead8", font=("Courier", 11),
                                         relief="flat", width=30, show="*")
@@ -33,17 +33,21 @@ class LoginScreen(tk.Frame):
 
         # Feedback label
         self.feedback = tk.Label(self, text="", bg="#0d0800", fg="#C8541A",
-                                  font=("Courier", 9))
+                font=("Courier", 9))
         self.feedback.pack()
 
         # Buttons
         tk.Button(self, text="LOGIN", bg="#C8541A", fg="#f5ead8",
-                  font=("Courier", 10, "bold"), relief="flat", width=20,
-                  command=self.handle_login).pack(pady=(12, 6), ipady=6)
+            font=("Courier", 10, "bold"), relief="flat", width=20,
+            command=self.handle_login).pack(pady=(12, 6), ipady=6)
 
         tk.Button(self, text="CREATE ACCOUNT", bg="#1a0a00", fg="#b8a99a",
-                  font=("Courier", 9), relief="flat", width=20,
-                  command=lambda: controller.show_frame("SignupScreen")).pack(ipady=6)
+            font=("Courier", 9), relief="flat", width=20,
+            command=lambda: controller.show_frame("SignupScreen")).pack(ipady=6)
+        
+        tk.Button(self, text="CREATE ACCOUNT", bg="#1a0a00", fg="#b8a99a",
+                font=("Courier", 9), relief="flat", width=20,
+                command=lambda: controller.show_frame("SignupScreen")).pack(ipady=6)
 
     def handle_login(self):
         username = self.username_entry.get().strip()
