@@ -1,9 +1,10 @@
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+#sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# point directly to the-app-name folder
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "the-app", "src", "the-app-name"))
 from backend.database import Database
-
 # ── Local DB tests only — no Supabase in CI ──
 
 def test_database_initializes():
