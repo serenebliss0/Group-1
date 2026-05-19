@@ -29,7 +29,9 @@ class MainApp(tk.Tk):
 
         self.frames = {}
 
-        for F in (SplashScreen, LoginScreen, SignupScreen):
+        self.accesible_screens = [SplashScreen, LoginScreen, SignupScreen]
+        
+        for F in self.accesible_screens:
             page_name = F.__name__
             frame = F(parent=self.container, controller=self)
             self.frames[page_name] = frame
