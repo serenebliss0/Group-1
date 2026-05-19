@@ -1,0 +1,42 @@
+2026-05-19 13:34:20,354 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:34:20,355 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:34:20,355 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-19 13:34:20,362 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:34:20,362 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:42:33,822 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:42:33,823 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:42:33,823 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-19 13:42:33,825 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:42:33,825 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:42:34,033 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:42:34,033 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:42:34,208 - INFO - [Pygame] - Pygame mixer initialized successfully
+2026-05-19 13:42:34,210 - INFO - [Pygame] - Intro sound playing
+2026-05-19 13:42:47,253 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:42:47,253 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:42:47,254 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-19 13:42:47,255 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:42:47,255 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:42:47,319 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:42:47,319 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:42:47,341 - INFO - [Pygame] - Pygame mixer initialized successfully
+2026-05-19 13:42:47,341 - INFO - [Pygame] - Intro sound playing
+2026-05-19 13:43:26,678 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:43:26,678 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:43:26,678 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-19 13:43:26,679 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:43:26,679 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:43:26,806 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:43:26,806 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:43:26,844 - INFO - [Pygame] - Pygame mixer initialized successfully
+2026-05-19 13:43:26,844 - INFO - [Pygame] - Intro sound playing
+2026-05-19 13:43:45,526 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:43:45,527 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:43:45,527 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-19 13:43:45,528 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:43:45,528 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:43:45,646 - INFO - [Database] - Created user tables sucessfully
+2026-05-19 13:43:45,646 - INFO - [Database] - Database initialized successfully
+2026-05-19 13:43:45,681 - INFO - [Pygame] - Pygame mixer initialized successfully
+2026-05-19 13:43:45,682 - INFO - [Pygame] - Intro sound playing
+2026-05-19 13:45:26,707 - INFO - [Database] - User creation successful
