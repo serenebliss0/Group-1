@@ -2,7 +2,7 @@ import sqlite3
 import os
 from dotenv import load_dotenv
 from supabase import create_client
-from logger import get_logger
+from .logger import get_logger 
 
 logger = get_logger("Database")
 load_dotenv()
@@ -23,77 +23,100 @@ class Database:
             logger.error(f"DB Initialization failed: {e}")
     def _init_tables(self):
         """Create tables if they don't exist."""
-        self.conn.executescript("""
-            CREATE TABLE IF NOT EXISTS runs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                player_name TEXT NOT NULL,
-                score INTEGER NOT NULL,
-                items_collected INTEGER DEFAULT 0,
-                time_played INTEGER DEFAULT 0,
-                difficulty TEXT DEFAULT 'normal',
-                ending TEXT,
-                created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
+        try:
+            self.conn.executescript("""
+                CREATE TABLE IF NOT EXISTS runs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    player_name TEXT NOT NULL,
+                    score INTEGER NOT NULL,
+                    items_collected INTEGER DEFAULT 0,
+                    time_played INTEGER DEFAULT 0,
+                    difficulty TEXT DEFAULT 'normal',
+                    ending TEXT,
+                    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
 
-            CREATE TABLE IF NOT EXISTS choices (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                run_id INTEGER NOT NULL,
-                scenario INTEGER NOT NULL,
-                choice_key TEXT NOT NULL,
-                delta INTEGER NOT NULL,
-                FOREIGN KEY (run_id) REFERENCES runs(id)
-            );
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        """)
-        self.conn.commit() #save changes, just like git commits 
+                CREATE TABLE IF NOT EXISTS choices (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id INTEGER NOT NULL,
+                    scenario INTEGER NOT NULL,
+                    choice_key TEXT NOT NULL,
+                    delta INTEGER NOT NULL,
+                    FOREIGN KEY (run_id) REFERENCES runs(id)
+                );
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+            self.conn.commit() #save changes, just like git commits 
+            logger.info("Created user tables sucessfully")
+        except Exception as e:
+            logger.error(f"Failed to initialize tables: {e}")
 
     def save_run(self, player_name, score, items_collected, time_played, difficulty, ending):
         """Save a completed run and return its run_id."""
-        cursor = self.conn.execute(
-            """INSERT INTO runs (player_name, score, items_collected, time_played, difficulty, ending)
-            VALUES (?, ?, ?, ?, ?, ?)""",
-            (player_name, score, items_collected, time_played, difficulty, ending)
-        )
-        self.conn.commit()
-        return cursor.lastrowid
+        try:
+            cursor = self.conn.execute(
+                """INSERT INTO runs (player_name, score, items_collected, time_played, difficulty, ending)
+                VALUES (?, ?, ?, ?, ?, ?)""",
+                (player_name, score, items_collected, time_played, difficulty, ending)
+            )
+            self.conn.commit()
+            return cursor.lastrowid
+        except Exception as e:
+            logger.error(f"Attempt to save run failed: {e}")
 
     def save_choice(self, run_id, scenario, choice_key, delta):
         """Log a single choice made during a run."""
-        self.conn.execute(
-            "INSERT INTO choices (run_id, scenario, choice_key, delta) VALUES (?, ?, ?, ?)",
-            (run_id, scenario, choice_key, delta)
-        )
-        self.conn.commit()
+        try:
+            self.conn.execute(
+                "INSERT INTO choices (run_id, scenario, choice_key, delta) VALUES (?, ?, ?, ?)",
+                (run_id, scenario, choice_key, delta)
+            )
+            self.conn.commit()
+            logger.info("Saved user choice")
+        except Exception as e:
+            logger.error(f"Failed to save user choice: {e}")
 
     def get_local_top_scores(self, limit=10):
         """Fetch top scores from local db."""
-        cursor = self.conn.execute(
-            "SELECT player_name, score, items_collected, time_played, ending FROM runs ORDER BY score DESC LIMIT ?",
-            (limit,) #the command expects a tuple, that's why I used it here
-        )
-        return [dict(row) for row in cursor.fetchall()]
-    
+        try:
+            cursor = self.conn.execute(
+                "SELECT player_name, score, items_collected, time_played, ending FROM runs ORDER BY score DESC LIMIT ?",
+                (limit,) #the command expects a tuple, that's why I used it here
+            )
+            logger.info("Pulled user's best scores locally")
+            return [dict(row) for row in cursor.fetchall()] or []
+        
+        except Exception as e:
+            logger.error(f"Unable to fetch local top scores: {e}")
+
     def get_password_hash(self, username):
         """Retrieve the stored password hash of an existing user"""
-        cursor = self.conn.execute(
-            "SELECT password FROM users WHERE username = ?",
-            (username,)
-        )
-        row = cursor.fetchone()
-        return row["password"] if row else None
+        try:
+            cursor = self.conn.execute(
+                "SELECT password FROM users WHERE username = ?",
+                (username,)
+            )
+            row = cursor.fetchone()
+            return row["password"] if row else None
+        except Exception as e:
+            logger.error(f"Failed to get user's password hash from database: {e}")
+
 
     def get_run_choices(self, run_id):
         """Get all choices for a specific run."""
-        cursor = self.conn.execute(
-            "SELECT scenario, choice_key, delta FROM choices WHERE run_id = ? ORDER BY scenario",
-            (run_id,)
-        )
-        return [dict(row) for row in cursor.fetchall()]
+        try:
+            cursor = self.conn.execute(
+                "SELECT scenario, choice_key, delta FROM choices WHERE run_id = ? ORDER BY scenario",
+                (run_id,)
+            )
+            return [dict(row) for row in cursor.fetchall()] or []
+        except Exception as e:
+            logger.error("Failed to receive choices from DB: {e}")
     
     def create_user(self, username, password):
             """Add a new user to the local sqlite database"""
@@ -103,17 +126,20 @@ class Database:
                     (username, password)
                 )
                 self.conn.commit()
+                logger.info("User creation successful")
                 return True
             except sqlite3.IntegrityError:
                 # This happens if the username already exists
                 print(f"Database Error: Username '{username}' is already taken.")
+                logger.error("User attempt to input a value that violates DB integrity")
                 return False
             except Exception as e:
-                print(f"An unexpected database error occurred: {e}")
+                logger.error(f"An unexpected database error occurred: {e}")
                 return False
 
     def close(self):
         self.conn.close()
+        logger.warning("The connection to the database was closed")
 
 
 
@@ -121,10 +147,20 @@ class Database:
 
 class Leaderboard:
     def __init__(self):
-        url = os.getenv("SUPABASE_URL")
-        key = os.getenv("SUPABASE_KEY")
-        self.supabase = create_client(url, key)
-        self.table = "scores"
+
+        url ="https://lyoccpevhprftrknyuzf.supabase.co"
+        key="sb_publishable_BO21GbbCvdcinxSUCKkzNw_i9h75QFx"
+        try:
+            url = os.getenv("SUPABASE_URL", "https://lyoccpevhprftrknyuzf.supabase.co")
+            key = os.getenv("SUPABASE_KEY", "sb_publishable_BO21GbbCvdcinxSUCKkzNw_i9h75QFx")
+        except Exception as e:
+            logger.error(f"Unable to retrieve api key from env. Do you have your keys in .env?\n{e}")
+        
+        try:
+            self.supabase = create_client(url, key)
+            self.table = "scores"
+        except Exception as e:
+            logger.error(f"Unable to connect to supabase db: {e}")
 
     def submit_score(self, player_name, score, items_collected, time_played):
         """Insert a completed run into the global leaderboard."""
