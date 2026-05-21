@@ -1,9 +1,10 @@
 import tkinter as tk
-from backend import database, login_handler, signup_handler, logic, notification, input_manager
-from frontend import login, signup, splash
+from backend import database, login_handler, signup_handler, logic, notification, input_manager, session
+from frontend import login, signup, splash, main_menu
 from frontend.login import LoginScreen
 from frontend.signup import SignupScreen
 from frontend.splash import SplashScreen
+from frontend.main_menu import MainMenu
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -28,17 +29,20 @@ class MainApp(tk.Tk):
         self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
+        #this ensures the login/signup frames only appear when no user is signed in
+        self.current_user = session.load_session()
 
-        self.accesible_screens = [SplashScreen, LoginScreen, SignupScreen]
+        self.accesible_screens = [SplashScreen, LoginScreen, SignupScreen, MainMenu]
         
         for F in self.accesible_screens:
             page_name = F.__name__
             frame = F(parent=self.container, controller=self)
             self.frames[page_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame("SplashScreen")
-
+        if self.current_user is None:
+            self.show_frame("SplashScreen")
+        else:
+            self.show_frame("MainMenu")
     def on_close(self):
         self.mixer.on_close()
         self.destroy()
@@ -46,6 +50,9 @@ class MainApp(tk.Tk):
     def show_frame(self, page_name):
         self.frames[page_name].tkraise()
 
+    print(logic.wtf_value) ## Remove this later
+
 if __name__ == "__main__":
     app = MainApp()
     app.mainloop()
+    

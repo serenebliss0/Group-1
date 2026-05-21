@@ -1,7 +1,7 @@
 import pygame
 import json
 from pathlib import Path
-from logger import get_logger
+from .logger import get_logger
 
 logger = get_logger("Input Handler")
 
@@ -50,7 +50,7 @@ class InputManager:
         if "f12" in self.combo_buffer and "tab" in self.combo_buffer:
             if not self.easter_egg_triggered:
                 self.easter_egg_triggered = True
-                print("🎮 EASTER EGG UNLOCKED")
+                print("EASTER EGG UNLOCKED")
 
     def is_pressed(self, action):
         return action in self.pressed
