@@ -1,10 +1,11 @@
 import tkinter as tk
 from backend import database, login_handler, signup_handler, logic, notification, input_manager, session
-from frontend import login, signup, splash, main_menu
+from frontend import login, signup, splash, main_menu, scene2
 from frontend.login import LoginScreen
 from frontend.signup import SignupScreen
 from frontend.splash import SplashScreen
 from frontend.main_menu import MainMenu
+from frontend.scene2 import SceneScreen
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -32,7 +33,7 @@ class MainApp(tk.Tk):
         #this ensures the login/signup frames only appear when no user is signed in
         self.current_user = session.load_session()
 
-        self.accesible_screens = [SplashScreen, LoginScreen, SignupScreen, MainMenu]
+        self.accesible_screens = [SplashScreen, LoginScreen, SignupScreen, MainMenu, SceneScreen]
         
         for F in self.accesible_screens:
             page_name = F.__name__

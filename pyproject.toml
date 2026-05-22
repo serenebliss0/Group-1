@@ -1,0 +1,18 @@
+[project]
+name = "what-remains"
+version = "0.1.0"
+description = "What Remains? is a psychological narrative game about perception, waste, and becoming. You play as a citizen of a city making environmental decisions. Until you realize you are not a citizen at all."
+authors = [
+    {name = "Semire Ajayi",email = "semajayi1234@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pygame-ce (>=2.5.7,<3.0.0)"
+]
+packages = [{ include = "the-app-name", from = "the-app/src" }]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -139,7 +139,7 @@ class MainMenu(Frame):
                 image=self._btn1_img,
                 borderwidth=0,
                 highlightthickness=0,
-                command=lambda: self.controller.show_frame("LoginScreen"),
+                command=lambda: self.controller.show_frame("SceneScreen"),
                 relief="flat"
             ).place(x=64.0, y=559.89, width=220.0, height=48.6)
         except Exception:
