@@ -57,7 +57,7 @@ class SignupScreen(tk.Frame):
         success = handler.register_user(username, password)
         if success:
             self.controller.current_user = username
-            self.controller.show_frame("GameScreen")  # change to whatever your next screen is
+            self.controller.show_frame("HomeScreen")
             self.feedback.config(text= f"Welcome {username}")
         else:
             self.feedback.config(text="That name was taken.")

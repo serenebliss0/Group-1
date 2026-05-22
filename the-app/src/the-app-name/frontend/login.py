@@ -74,8 +74,7 @@ class LoginScreen(tk.Frame):
             self.feedback.config(text="login successful.")
             self.controller.current_user = username
         # stop intro music later here if needed
-        # self.controller.audio.stop()
-            self.controller.show_frame("GameScreen")
+            self.controller.show_frame("HomeScreen")
         else:
             self.feedback.config(text="invalid username or password.")
 
