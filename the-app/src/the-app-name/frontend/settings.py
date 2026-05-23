@@ -26,9 +26,9 @@ class Settings:
     def __init__(self):
         self.text_speed = "normal"
         self.keybinds = {
-            "Choice A": "A",
-            "Choice B": "B",
-            "Choice C": "C"
+            "AUDIO": "A",
+            "BRIGHTNESS": "B",
+            "PERSONAL INFO": "C"
         }
 
     def save(self):
