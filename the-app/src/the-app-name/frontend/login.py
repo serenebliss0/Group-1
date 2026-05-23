@@ -1,5 +1,5 @@
 import tkinter as tk
-from backend import login_handler, database
+from backend import login_handler, database, session, logic
 
 db_conn = database.Database()
 handler = login_handler.LoginHandler(db_conn) # Instantiate the class and pass in the db_conn object
@@ -47,7 +47,11 @@ class LoginScreen(tk.Frame):
         
         tk.Button(self, text="I forgot my name", bg="#1a0a00", fg="#b8a99a",
                 font=("Courier", 9), relief="flat", width=20,
-                command=lambda: controller.show_frame("SignupScreen")).pack(ipady=6)
+                command=lambda: self.on_click_forgot_name(self.controller))
+
+    def on_click_forgot_name(self, controller):
+        controller.show_frame("SignupScreen").pack(ipady=6)
+        logic.wtf_value += 10
 
     def handle_login(self):
         username = self.username_entry.get().strip()
@@ -74,7 +78,10 @@ class LoginScreen(tk.Frame):
             self.feedback.config(text="login successful.")
             self.controller.current_user = username
         # stop intro music later here if needed
-            self.controller.show_frame("HomeScreen")
+        # self.controller.audio.stop()
+            self.controller.show_frame("MainMenu")
+            self.controller.current_user = username
+            session.save_session(username)
         else:
             self.feedback.config(text="invalid username or password.")
 
