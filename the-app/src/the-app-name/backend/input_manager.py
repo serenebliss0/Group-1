@@ -9,7 +9,7 @@ class InputManager:
     def __init__(self):
         pygame.joystick.init()
         pygame.key.set_repeat(0)
-        pygame.event.set_allowed([pygame.KEYDOWN, pygame.KEYUP])  # we ONLY care about keyboard state
+        pygame.event.set_allowed([pygame.KEYDOWN, pygame.KEYUP])
 
         base_dir = Path(__file__).resolve().parent
         with open(base_dir / "keybinds.json", "r") as f:
@@ -44,7 +44,7 @@ class InputManager:
                 print(e)
 
         # keep buffer small
-        self.combo_buffer = self.combo_buffer[-self.combo_limit:]
+        self.combo_buffer = self.combo_buffer[-self.combo_limit]
 
         # Easter egg combo
         if "f12" in self.combo_buffer and "tab" in self.combo_buffer:
