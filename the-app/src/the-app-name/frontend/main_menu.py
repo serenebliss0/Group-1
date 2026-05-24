@@ -99,7 +99,7 @@ class MainMenu(Frame):
             print("FAILED image_1.png:", e)
 
         try:
-            self._img2 = load_photo_image(relative_to_assets("main-bull.png"))
+            self._img2 = load_photo_image(relative_to_assets("player.png"))
             canvas.create_image(847, 404, image=self._img2)
         except Exception as e:
             print("FAILED main-bull.png:", e)
@@ -110,7 +110,7 @@ class MainMenu(Frame):
         try:
             self._btn1_img = load_photo_image(relative_to_assets("button_1.png"))
             ImageButton(self, image=self._btn1_img,
-                command=lambda: self.controller.show_frame("SceneScreen")
+                command=lambda: self.controller.show_frame("Scene2")
             ).place(x=64, y=559, width=220, height=48)
         except Exception as e:
             print("FAILED button_1.png:", e)

@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "name": "Factory Pollution",
+        "text": "Smoke from this factory is polluting the air and harming nearby ecosystems.",
+        "type": "pollution",
+        "impact": "high",
+        "fix_action": "Install Air Filters",
+        "fixed": false
+    },
+    {
+        "id": 2,
+        "name": "Oil Spill",
+        "text": "Toxic industrial waste is leaking into the environment.",
+        "type": "pollution",
+        "impact": "high",
+        "fix_action": "Clean Oil Spill",
+        "fixed": false
+    },
+    {
+        "id": 3,
+        "name": "Garbage Dump",
+        "text": "Large amounts of waste are piling up and attracting pests.",
+        "type": "pollution",
+        "impact": "medium",
+        "fix_action": "Recycle Waste",
+        "fixed": false
+    },
+    {
+        "id": 4,
+        "name": "Sewage Pipe",
+        "text": "Dirty wastewater is flowing directly into the river.",
+        "type": "pollution",
+        "impact": "high",
+        "fix_action": "Repair Pipe",
+        "fixed": false
+    },
+    {
+        "id": 5,
+        "name": "Dead Forest Area",
+        "text": "Trees here have died due to pollution and deforestation.",
+        "type": "pollution",
+        "impact": "high",
+        "fix_action": "Replant Trees",
+        "fixed": false
+    },
+    {
+        "id": 6,
+        "name": "Logging Site",
+        "text": "Excessive logging is destroying habitats for wildlife.",
+        "type": "pollution",
+        "impact": "medium",
+        "fix_action": "Enforce Reforestation",
+        "fixed": false
+    },
+    {
+        "id": 7,
+        "name": "Wind Turbines",
+        "text": "These turbines generate clean renewable energy.",
+        "type": "clean",
+        "impact": "positive",
+        "fix_action": null,
+        "fixed": true
+    },
+    {
+        "id": 8,
+        "name": "Recycling Station",
+        "text": "Recycling helps reduce environmental waste.",
+        "type": "clean",
+        "impact": "positive",
+        "fix_action": null,
+        "fixed": true
+    },
+    {
+        "id": 9,
+        "name": "Community Farm",
+        "text": "Sustainable farming provides healthy food with less pollution.",
+        "type": "clean",
+        "impact": "positive",
+        "fix_action": null,
+        "fixed": true
+    },
+    {
+        "id": 10,
+        "name": "River Ecosystem",
+        "text": "Clean rivers are essential for wildlife and human survival.",
+        "type": "clean",
+        "impact": "positive",
+        "fix_action": null,
+        "fixed": true
+    }
+]

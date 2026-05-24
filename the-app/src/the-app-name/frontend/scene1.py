@@ -28,7 +28,7 @@ class GameMapScreen(tk.Frame):
         # 2. Load the High-Resolution Concept Map Image using Pillow
         try:
             # Sourced textured background reflecting oxidised metal or internal circuitry [cite: 48, 180]
-            raw_img = Image.open(ASSETS / "game_map.png")
+            raw_img = Image.open(ASSETS / "map.png")
             
             # Double-check safety constraints if you ever need runtime scaling adjustments
             if raw_img.size != (self.map_width, self.map_height):

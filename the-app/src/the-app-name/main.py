@@ -14,10 +14,11 @@ from frontend.login import LoginScreen
 from frontend.signup import SignupScreen
 from frontend.splash import SplashScreen
 from frontend.main_menu import MainMenu
-from frontend.scene2 import SceneScreen
+from frontend.scene2 import Scene2   # ✅ ONLY GAME SCENE
 
 
 class MainApp(tk.Tk):
+
     def __init__(self):
         super().__init__()
 
@@ -27,7 +28,6 @@ class MainApp(tk.Tk):
         self.scale = 0.8
         self.width = int(self.winfo_screenwidth() * self.scale)
         self.height = int(self.winfo_screenheight() * self.scale)
-
         self.geometry(f"{self.width}x{self.height}")
 
         # Database / session
@@ -51,51 +51,40 @@ class MainApp(tk.Tk):
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
 
-        # Store frames
         self.frames = {}
 
+        # ✅ ALL SCREENS (FIXED)
         self.accessible_screens = (
             SplashScreen,
             LoginScreen,
             SignupScreen,
             MainMenu,
-            SceneScreen
+            Scene2
         )
 
-        # Create all screens
+        # Create frames
         for F in self.accessible_screens:
+
             page_name = F.__name__
 
             try:
                 frame = F(parent=self.container, controller=self)
-
                 self.frames[page_name] = frame
-
-                frame.grid(
-                    row=0,
-                    column=0,
-                    sticky="nsew"
-                )
+                frame.grid(row=0, column=0, sticky="nsew")
 
             except Exception as e:
                 print(f"Error loading {page_name}: {e}")
 
-        # IMPORTANT:
-        # Delay startup routing slightly so Tkinter fully renders first
         self.after(200, self.startup_routing)
 
-        print(logic.wtf_value)
-
     def startup_routing(self):
+
         self.update_idletasks()
 
-        # Force splash first
-        if "SplashScreen" in self.frames:
-            self.show_frame("SplashScreen")
-        else:
-            print("SplashScreen failed to load")
+        self.show_frame("SplashScreen")
 
     def show_frame(self, page_name):
+
         frame = self.frames.get(page_name)
 
         if frame:
@@ -104,6 +93,7 @@ class MainApp(tk.Tk):
             print(f"Frame '{page_name}' not found")
 
     def on_close(self):
+
         try:
             if self.mixer:
                 self.mixer.on_close()

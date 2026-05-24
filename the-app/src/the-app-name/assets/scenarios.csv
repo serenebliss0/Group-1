@@ -1,3 +1,2 @@
-id,name,text,choice_a,choice_b,choice_c
-1,The Phone Board,"This circuit board was a phone. A student bought it second-hand in 2019. It stopped charging in 2022. It ended up in a pile in Alaba Market...",Examine closer,Ignore it,Leave district
-2,The Generator Wire,"This wire ran from a generator to a primary school in Bayelsa for eleven years. You carry eleven years of children learning to read.",Touch the wiring,Log entry,Walk away
+name,text,choice_a,choice_b,choice_c,type,fix_result
+Factory Pollution,Smoke from this factory is polluting the air and harming nearby ecosystems.,Install Air Filters,Ignore Problem,Leave district,problem,
