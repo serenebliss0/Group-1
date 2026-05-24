@@ -6,6 +6,7 @@ from frontend.signup import SignupScreen
 from frontend.splash import SplashScreen
 from frontend.main_menu import MainMenu
 from frontend.scene2 import SceneScreen
+from frontend.leaderboard_screen import LeaderboardScreen
 from app import HomeScreen, MapScreen, GameScreen, InventoryScreen, CustomizeScreen
 
 class MainApp(tk.Tk):
@@ -49,7 +50,7 @@ class MainApp(tk.Tk):
         #this ensures the login/signup frames only appear when no user is signed in
         self.current_user = session.load_session()
 
-        self.accesible_screens = [SplashScreen, LoginScreen, SignupScreen, MainMenu, SceneScreen, HomeScreen, MapScreen, GameScreen, InventoryScreen, CustomizeScreen]
+        self.accesible_screens = [SplashScreen, LoginScreen, SignupScreen, MainMenu, SceneScreen, LeaderboardScreen, HomeScreen, MapScreen, GameScreen, InventoryScreen, CustomizeScreen]
         
         for F in self.accesible_screens:
             page_name = F.__name__
