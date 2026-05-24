@@ -47,7 +47,7 @@ class Scene2(tk.Frame):
         self.move_speed = 12
 
         # ---------------- TIMER ---------------- #
-        self.default_time = 10*60
+        self.default_time = 10 * 60
         self.time_left = self.default_time
         self.timer_running = False
         self.game_over = False
@@ -126,8 +126,16 @@ class Scene2(tk.Frame):
         self.info_title = tk.Label(self.info_box, text="", bg="#2a1a10", fg=CREAM)
         self.info_title.pack()
 
-        self.info_text = tk.Label(self.info_box, text="", bg="#2a1a10", fg=CREAM)
+        self.info_text = tk.Label(self.info_box, text="", bg="#2a1a10", fg=CREAM, wraplength=260)
         self.info_text.pack()
+
+        self.fix_button = tk.Button(
+            self.info_box,
+            text="FIX",
+            bg="green",
+            fg="white",
+            command=self._fix_current_node
+        )
 
         self.info_box.place_forget()
 
@@ -136,6 +144,7 @@ class Scene2(tk.Frame):
                 "id": item["id"],
                 "x": item["x"],
                 "y": item["y"],
+                "radius": item.get("radius", 70),
                 "type": item.get("type", "clean"),
                 "name": item["name"],
                 "text": item["text"]
@@ -152,11 +161,10 @@ class Scene2(tk.Frame):
             outline=CREAM
         )
 
-        self._update_camera()   # ✅ NOW EXISTS
+        self._update_camera()
 
     # ==================================================
     def _update_camera(self):
-        # FIXED METHOD (this was missing before)
 
         w = self.canvas.winfo_width() or 1200
         h = self.canvas.winfo_height() or 800
@@ -186,6 +194,7 @@ class Scene2(tk.Frame):
         self.timer_running = True
         self._tick_timer()
 
+    # ==================================================
     def _tick_timer(self):
 
         if self.game_over:
@@ -209,7 +218,8 @@ class Scene2(tk.Frame):
 
         missed = [
             n for n in self.interactive_nodes
-            if n["type"] == "pollution" and n["id"] not in self.fixed_nodes
+            if n["type"] == "pollution"
+            and n["id"] not in self.fixed_nodes
         ]
 
         GameOverScreen(self, self.controller, missed)
@@ -226,7 +236,6 @@ class Scene2(tk.Frame):
         for n in self.interactive_nodes:
             if n["type"] == "pollution" and n["id"] not in self.fixed_nodes:
                 return
-
         self._trigger_win()
 
     # ==================================================
@@ -251,8 +260,68 @@ class Scene2(tk.Frame):
 
     # ==================================================
     def _check_proximity(self):
-        pass  # keep your existing logic here if you had it
+
+        for node in self.interactive_nodes:
+
+            # skip fixed pollution nodes
+            if node["type"] == "pollution" and node["id"] in self.fixed_nodes:
+                continue
+
+            dist = (
+                (self.player_x - node["x"]) ** 2 +
+                (self.player_y - node["y"]) ** 2
+            ) ** 0.5
+
+            if dist < 150:
+
+                self.current_dialog_node = node
+
+                self.info_title.config(text=node["name"])
+                self.info_text.config(text=node["text"])
+
+                # show FIX only for pollution
+                if node["type"] == "pollution":
+                    self.fix_button.pack(pady=8)
+                else:
+                    self.fix_button.pack_forget()
+
+                self.info_box.place(x=20, y=80)
+                return
+
+        self.current_dialog_node = None
+        self.info_box.place_forget()
+
+    # ==================================================
+    def _fix_current_node(self):
+
+        if not self.current_dialog_node:
+            return
+
+        node = self.current_dialog_node
+
+        self.fixed_nodes.add(node["id"])
+
+        # draw checkbox/fixed marker
+        img = Image.open(
+            Path(__file__).resolve().parent.parent
+            / "assets/images/factory_fixed.png"
+        ).resize((80, 80))
+
+        tk_img = ImageTk.PhotoImage(img)
+
+        self.fixed_images[node["id"]] = tk_img
+
+        self.canvas.create_image(
+            node["x"],
+            node["y"],
+            image=tk_img
+        )
+
+        self.info_box.place_forget()
+
+        self._check_win_condition()
 
     # ==================================================
     def _open_pause(self):
+
         PauseMenu(self, self.controller)
