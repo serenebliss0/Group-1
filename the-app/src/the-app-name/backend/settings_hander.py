@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-KEYBINDS_FILE = Path("_keybinds.json")
+KEYBINDS_FILE = Path("keybinds.json")
 
 
 def load_keybinds() -> dict:
