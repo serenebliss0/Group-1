@@ -1,3 +1,5 @@
+"""Demonstrating how Tkinter canvases work"""
+
 import json
 import tkinter as tk
 

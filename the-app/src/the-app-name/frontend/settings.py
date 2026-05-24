@@ -1,137 +1,113 @@
-import pygame
-import sys
+"""Settings — volume, text speed, accessibility."""
 
-pygame.init()
+import tkinter as tk
 
-WIDTH, HEIGHT = 1280, 720
-
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Cinematic Settings UI")
-
-clock = pygame.time.Clock()
-
-BG = (5, 3, 2)
-ORANGE = (170, 70, 20)
-LIGHT = (230, 220, 205)
-DIM = (120, 90, 70)
-LINE = (45, 25, 15)
-
-title_font = pygame.font.SysFont("georgia", 72, bold=True)
-body_font = pygame.font.SysFont("consolas", 18)
-small_font = pygame.font.SysFont("consolas", 14)
-button_font = pygame.font.SysFont("consolas", 16)
+from backend.game_state import load_settings, save_settings
+from backend.theme import BG, CREAM, EMBER, FOG, FONT_SUB, FONT_TITLE, FONT_UI
 
 
-class Settings:
-    def __init__(self):
-        self.text_speed = "normal"
-        self.keybinds = {
-            "AUDIO": "A",
-            "BRIGHTNESS": "B",
-            "PERSONAL INFO": "C"
-        }
+class SettingsScreen(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent, bg=BG)
+        self.controller = controller
+        self.settings = load_settings()
 
-    def save(self):
-        print("Settings Saved!")
+        tk.Label(self, text="Settings", bg=BG, fg=EMBER, font=FONT_TITLE).pack(pady=(50, 30))
 
+        self._slider_row("Music volume", "music_volume", 0, 1, self._music_changed)
+        self._slider_row("Sound effects", "sfx_volume", 0, 1, self._sfx_changed)
+        self._slider_row("Text speed (lower = faster)", "text_speed", 15, 80, self._text_changed)
 
-settings = Settings()
+        self.motion_var = tk.BooleanVar(value=self.settings.get("reduced_motion", False))
+        tk.Checkbutton(
+            self,
+            text="Reduced motion",
+            variable=self.motion_var,
+            bg=BG,
+            fg=FOG,
+            selectcolor=BG,
+            activebackground=BG,
+            font=FONT_UI,
+            command=self._save,
+        ).pack(pady=12)
 
+        tk.Button(
+            self,
+            text="SHOW TUTORIAL AGAIN",
+            bg=BG,
+            fg=FOG,
+            activebackground=EMBER,
+            font=FONT_UI,
+            relief="flat",
+            command=self._reset_tutorial,
+        ).pack(pady=8, ipady=6)
 
-def draw_text(text, font, color, x, y):
-    surface = font.render(text, True, color)
-    screen.blit(surface, (x, y))
+        tk.Button(
+            self,
+            text="BACK",
+            bg=BG,
+            fg=CREAM,
+            activebackground=EMBER,
+            font=FONT_UI,
+            relief="flat",
+            command=self._back,
+        ).pack(pady=20, ipady=8)
 
+    def _reset_tutorial(self):
+        s = load_settings()
+        s["tutorial_seen"] = False
+        save_settings(s)
 
-def draw_ui():
-    screen.fill(BG)
+    def _slider_row(self, label, key, lo, hi, callback):
+        tk.Label(self, text=label, bg=BG, fg=FOG, font=FONT_SUB).pack(pady=(12, 4))
+        val = self.settings.get(key, (lo + hi) / 2)
+        scale = tk.Scale(
+            self,
+            from_=lo,
+            to=hi,
+            resolution=0.05 if isinstance(val, float) else 1,
+            orient="horizontal",
+            bg=BG,
+            fg=CREAM,
+            highlightthickness=0,
+            troughcolor="#2a1e10",
+            activebackground=EMBER,
+            command=lambda v, k=key, cb=callback: cb(k, float(v)),
+        )
+        scale.set(val)
+        scale.pack(fill="x", padx=80)
+        setattr(self, f"_scale_{key}", scale)
 
-    pygame.draw.line(screen, LINE, (640, 0), (640, HEIGHT), 1)
+    def _music_changed(self, key, val):
+        self.settings[key] = val
+        audio = getattr(self.controller, "audio", None)
+        if audio:
+            audio.set_music_volume(val)
+        self._save()
 
-    draw_text("< BACK", small_font, DIM, 40, 30)
+    def _sfx_changed(self, key, val):
+        self.settings[key] = val
+        audio = getattr(self.controller, "audio", None)
+        if audio:
+            audio.set_sfx_volume(val)
+        self._save()
 
-    draw_text("Settings", title_font, LIGHT, 70, 310)
+    def _text_changed(self, key, val):
+        self.settings[key] = int(val)
+        self._save()
 
-    description = [
-        "Adjust keybindings, audio preferences, and",
-        "narrative pacing to suit your experience."
-    ]
+    def _save(self):
+        self.settings["reduced_motion"] = self.motion_var.get()
+        save_settings(self.settings)
 
-    y = 410
-    for line in description:
-        draw_text(line, body_font, DIM, 75, y)
-        y += 28
+    def _back(self):
+        if getattr(self.controller, "current_user", None):
+            self.controller.show_frame("MainMenu")
+        else:
+            self.controller.show_frame("SplashScreen")
 
-    draw_text("KEYBINDINGS", small_font, ORANGE, 700, 140)
-
-    start_y = 200
-
-    for i, (action, key) in enumerate(settings.keybinds.items()):
-        yy = start_y + i * 90
-
-        draw_text(action, body_font, LIGHT, 700, yy)
-
-        pygame.draw.line(screen, LINE, (700, yy + 42), (1140, yy + 42), 1)
-
-        key_rect = pygame.Rect(1160, yy - 5, 38, 38)
-
-        pygame.draw.rect(screen, ORANGE, key_rect, 1)
-
-        key_text = body_font.render(key, True, ORANGE)
-        screen.blit(key_text, key_text.get_rect(center=key_rect.center))
-
-    draw_text("EXPERIENCE", small_font, ORANGE, 700, 470)
-
-    draw_text("Text Speed", body_font, LIGHT, 700, 540)
-
-    pygame.draw.line(screen, LINE, (700, 585), (1140, 585), 1)
-
-    speed_rect = pygame.Rect(1110, 523, 88, 38)
-
-    pygame.draw.rect(screen, ORANGE, speed_rect, 1)
-
-    speed_text = button_font.render(settings.text_speed, True, ORANGE)
-
-    screen.blit(speed_text, speed_text.get_rect(center=speed_rect.center))
-
-    save_rect = pygame.Rect(700, 640, 500, 55)
-
-    pygame.draw.rect(screen, ORANGE, save_rect, 1)
-
-    save_text = button_font.render("SAVE & RETURN", True, LIGHT)
-
-    screen.blit(save_text, (730, 658))
-
-    return save_rect
-
-
-running = True
-
-while running:
-    save_rect = draw_ui()
-
-    back_rect = pygame.Rect(40, 30, 120, 40)
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            mx, my = event.pos
-
-            # BACK
-            if back_rect.collidepoint(mx, my):
-                running = False
-                sys.exit()
-
-            # SAVE & RETURN
-            if save_rect.collidepoint(mx, my):
-                settings.save()
-                running = False
-                sys.exit()
-
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
-sys.exit()
+    def on_show(self):
+        self.settings = load_settings()
+        audio = getattr(self.controller, "audio", None)
+        if audio:
+            audio.settings = self.settings

@@ -97,8 +97,5 @@ class SplashScreen(tk.Frame):
             self.after(30, self.fade_out)
 
         else:
-            self.go_next()
-
-    def go_next(self):
-        if self.controller:
+            # Tell the main app container to flip to the login
             self.controller.show_frame("LoginScreen")
