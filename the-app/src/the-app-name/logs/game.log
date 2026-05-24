@@ -40,3 +40,20 @@
 2026-05-19 13:43:45,681 - INFO - [Pygame] - Pygame mixer initialized successfully
 2026-05-19 13:43:45,682 - INFO - [Pygame] - Intro sound playing
 2026-05-19 13:45:26,707 - INFO - [Database] - User creation successful
+2026-05-24 22:15:59,614 - INFO - [Database] - Created user tables sucessfully
+2026-05-24 22:15:59,615 - INFO - [Database] - Database initialized successfully
+2026-05-24 22:15:59,615 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-24 22:15:59,630 - INFO - [Database] - Created user tables sucessfully
+2026-05-24 22:15:59,630 - INFO - [Database] - Database initialized successfully
+2026-05-24 22:16:00,232 - INFO - [Database] - Created user tables sucessfully
+2026-05-24 22:16:00,232 - INFO - [Database] - Database initialized successfully
+2026-05-24 22:16:36,147 - INFO - [Database] - User creation successful
+2026-05-24 22:16:47,055 - WARNING - [Database] - The connection to the database was closed
+2026-05-24 22:17:20,871 - INFO - [Database] - Created user tables sucessfully
+2026-05-24 22:17:20,873 - INFO - [Database] - Database initialized successfully
+2026-05-24 22:17:20,873 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-24 22:17:20,880 - INFO - [Database] - Created user tables sucessfully
+2026-05-24 22:17:20,880 - INFO - [Database] - Database initialized successfully
+2026-05-24 22:17:21,182 - INFO - [Database] - Created user tables sucessfully
+2026-05-24 22:17:21,182 - INFO - [Database] - Database initialized successfully
+2026-05-24 22:18:06,083 - WARNING - [Database] - The connection to the database was closed
