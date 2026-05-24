@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-KEYBINDS_FILE = Path(_C:\Users\HP\OneDrive\Documents\Group-1\the-app\src\the-app-name\backend\keybinds.json)
+KEYBINDS_FILE = Path("_keybinds.json")
 
 
 def load_keybinds() -> dict:
