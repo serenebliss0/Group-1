@@ -9,7 +9,7 @@ class LoginScreen(tk.Frame):
         super().__init__(parent, bg="#0d0800")
         self.controller = controller
 
-        tk.Label(self, text="THE RUIN AND THE GREEN", bg="#0d0800", fg="#C8541A",
+        tk.Label(self, text="WHAT REMAINS?", bg="#0d0800", fg="#C8541A",
                 font=("Courier", 20, "bold")).pack(pady=(80, 5))
 
         tk.Label(self, text="sign in to continue", bg="#0d0800", fg="#b8a99a",
