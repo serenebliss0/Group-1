@@ -14,7 +14,7 @@ from frontend.login import LoginScreen
 from frontend.signup import SignupScreen
 from frontend.splash import SplashScreen
 from frontend.main_menu import MainMenu
-from frontend.scene2 import Scene2   # ✅ ONLY GAME SCENE
+from frontend.scene2 import Scene2
 
 
 class MainApp(tk.Tk):
@@ -24,17 +24,14 @@ class MainApp(tk.Tk):
 
         self.title("The Ruin and the Green")
 
-        # Window size
         self.scale = 0.8
         self.width = int(self.winfo_screenwidth() * self.scale)
         self.height = int(self.winfo_screenheight() * self.scale)
         self.geometry(f"{self.width}x{self.height}")
 
-        # Database / session
         self.db = database.Database()
         self.current_user = session.load_session()
 
-        # Audio
         try:
             self.mixer = logic.Mixer()
             self.mixer.play_intro_sound()
@@ -44,7 +41,6 @@ class MainApp(tk.Tk):
 
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
-        # Main container
         self.container = tk.Frame(self)
         self.container.pack(fill="both", expand=True)
 
@@ -53,7 +49,6 @@ class MainApp(tk.Tk):
 
         self.frames = {}
 
-        # ✅ ALL SCREENS (FIXED)
         self.accessible_screens = (
             SplashScreen,
             LoginScreen,
@@ -62,9 +57,7 @@ class MainApp(tk.Tk):
             Scene2
         )
 
-        # Create frames
         for F in self.accessible_screens:
-
             page_name = F.__name__
 
             try:
@@ -78,9 +71,7 @@ class MainApp(tk.Tk):
         self.after(200, self.startup_routing)
 
     def startup_routing(self):
-
         self.update_idletasks()
-
         self.show_frame("SplashScreen")
 
     def show_frame(self, page_name):
@@ -89,6 +80,11 @@ class MainApp(tk.Tk):
 
         if frame:
             frame.tkraise()
+
+            # 🔥 RESET GAME WHEN ENTERING SCENE
+            if page_name == "Scene2":
+                frame.reset_game()
+
         else:
             print(f"Frame '{page_name}' not found")
 

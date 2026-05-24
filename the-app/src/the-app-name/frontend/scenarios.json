@@ -6,16 +6,22 @@
         "type": "pollution",
         "impact": "high",
         "fix_action": "Install Air Filters",
-        "fixed": false
+        "fixed": false,
+        "x": 1350,
+        "y": 300,
+        "radius": 70
     },
     {
         "id": 2,
         "name": "Oil Spill",
-        "text": "Toxic industrial waste is leaking into the environment.",
+        "text": "Toxic industrial waste is leaking into the environment near the pipeline.",
         "type": "pollution",
         "impact": "high",
         "fix_action": "Clean Oil Spill",
-        "fixed": false
+        "fixed": false,
+        "x": 1500,
+        "y": 850,
+        "radius": 70
     },
     {
         "id": 3,
@@ -24,16 +30,22 @@
         "type": "pollution",
         "impact": "medium",
         "fix_action": "Recycle Waste",
-        "fixed": false
+        "fixed": false,
+        "x": 220,
+        "y": 600,
+        "radius": 70
     },
     {
         "id": 4,
-        "name": "Sewage Pipe",
-        "text": "Dirty wastewater is flowing directly into the river.",
+        "name": "Sewage Pipe Leak",
+        "text": "Dirty wastewater is flowing directly into the river system.",
         "type": "pollution",
         "impact": "high",
         "fix_action": "Repair Pipe",
-        "fixed": false
+        "fixed": false,
+        "x": 1450,
+        "y": 980,
+        "radius": 70
     },
     {
         "id": 5,
@@ -42,7 +54,10 @@
         "type": "pollution",
         "impact": "high",
         "fix_action": "Replant Trees",
-        "fixed": false
+        "fixed": false,
+        "x": 1000,
+        "y": 500,
+        "radius": 70
     },
     {
         "id": 6,
@@ -51,16 +66,22 @@
         "type": "pollution",
         "impact": "medium",
         "fix_action": "Enforce Reforestation",
-        "fixed": false
+        "fixed": false,
+        "x": 1100,
+        "y": 650,
+        "radius": 70
     },
     {
         "id": 7,
-        "name": "Wind Turbines",
+        "name": "Wind Farm",
         "text": "These turbines generate clean renewable energy.",
         "type": "clean",
         "impact": "positive",
         "fix_action": null,
-        "fixed": true
+        "fixed": true,
+        "x": 1600,
+        "y": 600,
+        "radius": 70
     },
     {
         "id": 8,
@@ -69,7 +90,10 @@
         "type": "clean",
         "impact": "positive",
         "fix_action": null,
-        "fixed": true
+        "fixed": true,
+        "x": 1300,
+        "y": 700,
+        "radius": 70
     },
     {
         "id": 9,
@@ -78,7 +102,10 @@
         "type": "clean",
         "impact": "positive",
         "fix_action": null,
-        "fixed": true
+        "fixed": true,
+        "x": 350,
+        "y": 200,
+        "radius": 70
     },
     {
         "id": 10,
@@ -87,6 +114,154 @@
         "type": "clean",
         "impact": "positive",
         "fix_action": null,
-        "fixed": true
+        "fixed": true,
+        "x": 800,
+        "y": 750,
+        "radius": 70
+    },
+    {
+        "id": 11,
+        "name": "E-Waste Dump",
+        "text": "Electronic waste is leaking toxic chemicals into soil.",
+        "type": "pollution",
+        "impact": "high",
+        "fix_action": "Recycle Electronics",
+        "fixed": false,
+        "x": 1200,
+        "y": 950,
+        "radius": 70
+    },
+    {
+        "id": 12,
+        "name": "Illegal Mining Site",
+        "text": "Mining activities are destroying land and contaminating water.",
+        "type": "pollution",
+        "impact": "high",
+        "fix_action": "Stop Mining Activity",
+        "fixed": false,
+        "x": 500,
+        "y": 450,
+        "radius": 70
+    },
+    {
+        "id": 13,
+        "name": "Plastic River Pollution",
+        "text": "Plastic waste is accumulating along the riverbanks.",
+        "type": "pollution",
+        "impact": "high",
+        "fix_action": "River Cleanup",
+        "fixed": false,
+        "x": 900,
+        "y": 650,
+        "radius": 70
     }
+    ,
+{
+    "id": 14,
+    "name": "Solar Panel Field",
+    "text": "Solar panels convert sunlight into clean electricity without pollution.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 1700,
+    "y": 300,
+    "radius": 70
+},
+{
+    "id": 15,
+    "name": "Protected Wildlife Reserve",
+    "text": "This protected area helps animals live safely without human interference.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 600,
+    "y": 300,
+    "radius": 70
+},
+{
+    "id": 16,
+    "name": "Clean Water Station",
+    "text": "Provides safe drinking water while reducing plastic bottle waste.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 750,
+    "y": 500,
+    "radius": 70
+},
+{
+    "id": 17,
+    "name": "Urban Garden",
+    "text": "Urban gardens improve air quality and provide fresh food locally.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 300,
+    "y": 800,
+    "radius": 70
+},
+{
+    "id": 18,
+    "name": "Composting Site",
+    "text": "Organic waste is turned into nutrient-rich compost for farming.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 900,
+    "y": 300,
+    "radius": 70
+},
+{
+    "id": 19,
+    "name": "Eco School",
+    "text": "Students here learn sustainability and environmental protection.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 400,
+    "y": 650,
+    "radius": 70
+},
+{
+    "id": 20,
+    "name": "Biodiversity Zone",
+    "text": "A rich habitat where plants and animals coexist naturally.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 1200,
+    "y": 400,
+    "radius": 70
+},
+{
+    "id": 21,
+    "name": "Hydropower Station",
+    "text": "Flowing water is used to generate renewable electricity.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 850,
+    "y": 900,
+    "radius": 70
+},
+{
+    "id": 22,
+    "name": "Tree Nursery",
+    "text": "Young trees are grown here to restore forests and green spaces.",
+    "type": "clean",
+    "impact": "positive",
+    "fix_action": null,
+    "fixed": true,
+    "x": 1000,
+    "y": 800,
+    "radius": 70
+}
 ]
