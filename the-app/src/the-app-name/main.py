@@ -10,6 +10,8 @@ from frontend.leaderboard import LeaderboardScreen
 from frontend.settings import SettingsScreen
 from frontend.ending_screen import EndingScreen
 from frontend.act1 import ActOne
+from frontend.scene2 import Scene2
+
 
 
 class MainApp(tk.Tk):
@@ -48,6 +50,7 @@ class MainApp(tk.Tk):
             LeaderboardScreen,
             SettingsScreen,
             EndingScreen,
+            Scene2
         ):
             name = cls.__name__
             try:
