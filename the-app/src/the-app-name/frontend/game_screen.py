@@ -1,4 +1,4 @@
-"""Core explorable world — camera, movement, interactions."""
+"""Core explorable world — screen-centered player, scrolling map."""
 
 import tkinter as tk
 import time
@@ -6,7 +6,6 @@ import time
 from backend import collisions, events, game_state
 from backend.map_renderer import MapRenderer
 from backend.theme import (
-    ASH,
     BG,
     CREAM,
     DIM,
@@ -17,7 +16,7 @@ from backend.theme import (
     MAP_HEIGHT,
     MAP_WIDTH,
     MUTED_GREEN,
-    PLAYER_SIZE,
+    PLAYER_RADIUS,
     PLAYER_SPEED,
     ROAD,
     WATER_CLEAN,
@@ -28,12 +27,9 @@ from frontend.dialogue import DialogueOverlay
 from frontend.pause_menu import PauseOverlay
 from frontend.tutorial_overlay import TutorialOverlay, should_show_tutorial
 
-# keysym -> internal movement key
-_KEYSYMS_PRESS = {
-    "w": "w", "W": "w",
-    "s": "s", "S": "s",
-    "a": "a", "A": "a",
-    "d": "d", "D": "d",
+_KEYSYMS = {
+    "w": "w", "W": "w", "s": "s", "S": "s",
+    "a": "a", "A": "a", "d": "d", "D": "d",
     "Up": "up", "Down": "down", "Left": "left", "Right": "right",
 }
 
@@ -57,15 +53,36 @@ class GameScreen(tk.Frame):
         self._keys_bound = False
         self._total_interactables = len(INTERACTABLES)
 
+        # World position (center of player)
+        self.world_x = float(MAP_WIDTH // 2)
+        self.world_y = float(MAP_HEIGHT // 2)
+
+        # --- Play area: scrolling world + fixed player on top ---
+        self.play_area = tk.Frame(self, bg=BG)
+        self.play_area.pack(fill="both", expand=True)
+
         self.canvas = tk.Canvas(
-            self, bg=BG, highlightthickness=0, bd=0,
+            self.play_area,
+            bg=BG,
+            highlightthickness=0,
+            bd=0,
             scrollregion=(0, 0, MAP_WIDTH, MAP_HEIGHT),
-            xscrollincrement=1,
-            yscrollincrement=1,
         )
-        self.canvas.pack(fill="both", expand=True)
-        self.canvas.configure(takefocus=1)
-        self.canvas.bind("<Button-1>", self._focus_game)
+        self.canvas.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # Player marker at screen center (Frame — Canvas.tkraise() is broken on Py 3.14)
+        self.player_sprite = tk.Frame(self.play_area, bg=BG, width=56, height=56)
+        self.player_sprite.place(relx=0.5, rely=0.5, anchor="center")
+        self.player_sprite.pack_propagate(False)
+        self._player_canvas = tk.Canvas(
+            self.player_sprite, width=56, height=56,
+            bg=BG, highlightthickness=0, bd=0,
+        )
+        self._player_canvas.pack(fill="both", expand=True)
+        self._draw_player_sprite()
+
+        for w in (self.play_area, self.canvas, self.player_sprite, self._player_canvas):
+            w.bind("<Button-1>", self._focus_game)
         self.canvas.bind("<Enter>", self._focus_game)
 
         self.hud = tk.Frame(self, bg=BG)
@@ -74,40 +91,59 @@ class GameScreen(tk.Frame):
             self.hud, text="", bg=BG, fg=FOG, font=FONT_UI, anchor="w"
         )
         self.score_label.pack(anchor="w")
-        self.controls_hint = tk.Label(
+        tk.Label(
             self.hud,
             text="WASD / Arrows — move   ·   E — interact   ·   ESC — pause",
-            bg=BG,
-            fg=DIM,
-            font=("Courier", 8),
-        )
-        self.controls_hint.pack(anchor="w", pady=(4, 0))
+            bg=BG, fg=DIM, font=("Courier", 8),
+        ).pack(anchor="w", pady=(4, 0))
 
         self.prompt_label = tk.Label(self, text="", bg=BG, fg=EMBER, font=FONT_UI)
         self.prompt_label.place(relx=0.5, rely=0.88, anchor="center")
 
         self._build_world()
-        pw, ph = PLAYER_SIZE, PLAYER_SIZE
-        self.player_w, self.player_h = pw, ph
-        self.player_x = MAP_WIDTH // 2 - pw / 2
-        self.player_y = MAP_HEIGHT // 2 - ph / 2
-        self.player_id = self.canvas.create_oval(
-            self.player_x, self.player_y,
-            self.player_x + pw, self.player_y + ph,
-            fill=EMBER, outline=CREAM, width=2, tags="player",
-        )
-        self.canvas.tag_raise("player")
-        self.after(50, self._update_camera)
+        self.after(100, self._update_camera)
 
         self._memorial = {
-            "id": "memorial",
-            "scenario_id": 11,
+            "id": "memorial", "scenario_id": 11,
             "x": 1240, "y": 1240, "w": 120, "h": 120, "event_id": "",
         }
 
+    def _draw_player_sprite(self):
+        """Visible character marker — you do NOT need a PNG sprite for this to work."""
+        c = self._player_canvas
+        c.delete("all")
+        # Outer glow ring
+        c.create_oval(2, 2, 54, 54, fill="#3a2210", outline=EMBER, width=3)
+        # Body
+        c.create_oval(10, 10, 46, 46, fill=EMBER, outline=CREAM, width=2)
+        # Core (eye/light)
+        c.create_oval(22, 22, 34, 34, fill=CREAM)
+        # Direction hint
+        c.create_polygon(26, 8, 22, 16, 30, 16, fill=CREAM, outline="")
+
+    @property
+    def player_x(self):
+        return self.world_x - PLAYER_RADIUS
+
+    @property
+    def player_y(self):
+        return self.world_y - PLAYER_RADIUS
+
+    @property
+    def player_w(self):
+        return PLAYER_RADIUS * 2
+
+    @property
+    def player_h(self):
+        return PLAYER_RADIUS * 2
+
     def _focus_game(self, event=None):
+        self._force_focus()
+
+    def _force_focus(self):
         try:
-            self.canvas.focus_force()
+            self.controller.focus_force()
+            self.canvas.focus_set()
         except tk.TclError:
             pass
 
@@ -127,7 +163,7 @@ class GameScreen(tk.Frame):
             cx = obj["x"] + obj["w"] / 2
             cy = obj["y"] + obj["h"] / 2
             glow = self.canvas.create_oval(
-                cx - 8, cy - 8, cx + 8, cy + 8,
+                cx - 10, cy - 10, cx + 10, cy + 10,
                 fill="", outline=DIM, width=1, dash=(3, 3),
                 tags=("interact_glow", oid),
             )
@@ -152,44 +188,41 @@ class GameScreen(tk.Frame):
         if flags.get("lights"):
             for lid in self._layer_ids.get("streetlights", []):
                 c.itemconfig(lid, fill="#c9b87a")
-        if flags.get("filter") and self._layer_ids.get("purifier"):
-            c.itemconfig(self._layer_ids["purifier"], outline=MUTED_GREEN)
 
     def _accepts_input(self):
-        if self.controller._current_frame is not self:
+        if not self._is_active_screen():
             return False
-        if self.paused or self.in_dialogue or self._tutorial_open:
-            return False
-        return True
+        return not (self.paused or self.in_dialogue or self._tutorial_open)
 
     def on_show(self):
         self.state = game_state.GameState()
         user = getattr(self.controller, "current_user", None)
+
         if getattr(self.controller, "start_new_game", False):
             self.state.reset_run()
             self.controller.start_new_game = False
+            self.world_x = float(MAP_WIDTH // 2)
+            self.world_y = float(MAP_HEIGHT // 2)
             self._build_world()
         elif user and game_state.has_save(user):
             data = game_state.load_game(user)
             if data:
                 self.state.load_from_dict(data)
+            self.world_x = float(self.state.player_x)
+            self.world_y = float(self.state.player_y)
             self._rebuild_interact_markers()
         else:
+            self.world_x = float(self.state.player_x)
+            self.world_y = float(self.state.player_y)
             self._rebuild_interact_markers()
 
-        self.player_x = self.state.player_x - self.player_w / 2
-        self.player_y = self.state.player_y - self.player_h / 2
-        self.player_id = self.canvas.create_oval(
-            self.player_x, self.player_y,
-            self.player_x + self.player_w, self.player_y + self.player_h,
-            fill=EMBER, outline=CREAM, width=2, tags="player",
-        )
-        self.canvas.tag_raise("player")
+        self.state.player_x = self.world_x
+        self.state.player_y = self.world_y
         self._apply_world_visuals()
         self._update_hud()
+        self._update_camera()
         self._bind_keys()
-        self.after(80, self._focus_game)
-        self.after(120, self._update_camera)
+        self.after(100, self._force_focus)
 
         audio = getattr(self.controller, "audio", None)
         if audio:
@@ -213,7 +246,7 @@ class GameScreen(tk.Frame):
 
     def _tutorial_done(self):
         self._tutorial_open = False
-        self._focus_game()
+        self._force_focus()
 
     def on_hide(self):
         self._unbind_keys()
@@ -225,56 +258,61 @@ class GameScreen(tk.Frame):
             audio.stop_ambient()
 
     def _bind_keys(self):
-        if self._keys_bound:
-            return
-        root = self.controller
-        root.bind("<KeyPress>", self._on_key_press)
-        root.bind("<KeyRelease>", self._on_key_release)
-        self.canvas.bind("<KeyPress>", self._on_key_press)
-        self.canvas.bind("<KeyRelease>", self._on_key_release)
-        self.bind("<KeyPress>", self._on_key_press)
-        self.bind("<KeyRelease>", self._on_key_release)
+        self._unbind_keys()
+        # bind_all on root — receives keys no matter which widget has focus
+        self.controller.bind_all("<KeyPress>", self._on_key_press, add="+")
+        self.controller.bind_all("<KeyRelease>", self._on_key_release, add="+")
         self._keys_bound = True
 
     def _unbind_keys(self):
         if not self._keys_bound:
             return
         try:
-            self.controller.unbind("<KeyPress>")
-            self.controller.unbind("<KeyRelease>")
+            self.controller.unbind_all("<KeyPress>")
+            self.controller.unbind_all("<KeyRelease>")
         except tk.TclError:
             pass
-        for w in (self, self.canvas):
-            try:
-                w.unbind("<KeyPress>")
-                w.unbind("<KeyRelease>")
-            except tk.TclError:
-                pass
         self._keys_bound = False
         self.keys_pressed.clear()
 
+    def _is_active_screen(self):
+        return getattr(self.controller, "_current_frame", None) is self
+
+    def _map_key(self, event):
+        sym = event.keysym
+        mapped = _KEYSYMS.get(sym)
+        if mapped:
+            return mapped
+        if event.char and len(event.char) == 1:
+            ch = event.char.lower()
+            if ch in ("w", "a", "s", "d"):
+                return ch
+        return None
+
     def _on_key_press(self, event):
-        if not self._accepts_input():
+        if not self._is_active_screen():
+            return
+        if self.paused or self.in_dialogue or self._tutorial_open:
             return
         sym = event.keysym
         if sym in ("e", "E"):
             self._try_interact()
-            return "break"
+            return
         if sym == "Escape":
             self._toggle_pause()
-            return "break"
-        mapped = _KEYSYMS_PRESS.get(sym)
+            return
+        mapped = self._map_key(event)
         if mapped:
             self.keys_pressed.add(mapped)
-            return "break"
 
     def _on_key_release(self, event):
-        if not self._accepts_input():
+        if not self._is_active_screen():
             return
-        mapped = _KEYSYMS_PRESS.get(event.keysym)
+        if self.paused or self.in_dialogue or self._tutorial_open:
+            return
+        mapped = self._map_key(event)
         if mapped:
             self.keys_pressed.discard(mapped)
-            return "break"
 
     def _game_tick(self):
         if self._accepts_input():
@@ -282,6 +320,7 @@ class GameScreen(tk.Frame):
             self._check_proximity()
             elapsed = int(time.time() - self._play_start)
             self.state.playtime_seconds = max(self.state.playtime_seconds, elapsed)
+        self._update_camera()
         self._tick_id = self.after(16, self._game_tick)
 
     def _process_movement(self):
@@ -298,46 +337,34 @@ class GameScreen(tk.Frame):
         if dx and dy:
             dx *= 0.707
             dy *= 0.707
-        if dx or dy:
-            ok, nx, ny = collisions.can_move(
-                self.player_x, self.player_y, self.player_w, self.player_h,
-                dx, dy, OBSTACLES, MAP_WIDTH, MAP_HEIGHT,
-            )
-            if ok:
-                self.player_x, self.player_y = nx, ny
-                self.state.player_x = nx + self.player_w / 2
-                self.state.player_y = ny + self.player_h / 2
-                self._sync_player()
-                self._update_camera()
+        if not (dx or dy):
+            return
 
-    def _sync_player(self):
-        self.canvas.coords(
-            self.player_id,
-            self.player_x, self.player_y,
-            self.player_x + self.player_w, self.player_y + self.player_h,
+        px, py = self.player_x, self.player_y
+        ok, nx, ny = collisions.can_move(
+            px, py, self.player_w, self.player_h,
+            dx, dy, OBSTACLES, MAP_WIDTH, MAP_HEIGHT,
         )
-        self.canvas.tag_raise("player")
+        if ok:
+            self.world_x = nx + PLAYER_RADIUS
+            self.world_y = ny + PLAYER_RADIUS
+            self.state.player_x = self.world_x
+            self.state.player_y = self.world_y
 
     def _update_camera(self):
+        """Scroll the world so the player (screen center) tracks world_x/y."""
         self.update_idletasks()
-        vw = max(self.canvas.winfo_width(), 1)
-        vh = max(self.canvas.winfo_height(), 1)
-        if vw >= MAP_WIDTH and vh >= MAP_HEIGHT:
-            return
-        cx = self.player_x + self.player_w / 2
-        cy = self.player_y + self.player_h / 2
-        max_x = max(MAP_WIDTH - vw, 1)
-        max_y = max(MAP_HEIGHT - vh, 1)
-        left = max(0, min(cx - vw / 2, max_x))
-        top = max(0, min(cy - vh / 2, max_y))
-        self.canvas.xview_moveto(left / max_x)
-        self.canvas.yview_moveto(top / max_y)
+        vw = max(self.canvas.winfo_width(), 200)
+        vh = max(self.canvas.winfo_height(), 200)
+        scroll_w = max(MAP_WIDTH - vw, 1)
+        scroll_h = max(MAP_HEIGHT - vh, 1)
+        left = max(0, min(self.world_x - vw / 2, scroll_w))
+        top = max(0, min(self.world_y - vh / 2, scroll_h))
+        self.canvas.xview_moveto(left / scroll_w)
+        self.canvas.yview_moveto(top / scroll_h)
 
     def _active_interactables(self):
-        items = [
-            o for o in INTERACTABLES
-            if o["id"] not in self.state.triggered_interactables
-        ]
+        items = [o for o in INTERACTABLES if o["id"] not in self.state.triggered_interactables]
         if len(self.state.triggered_interactables) >= 4:
             items.append(self._memorial)
         return items
@@ -351,7 +378,7 @@ class GameScreen(tk.Frame):
             if oid in self.state.triggered_interactables:
                 continue
             try:
-                self.canvas.itemconfig(glow_id, outline=DIM)
+                self.canvas.itemconfig(glow_id, outline=DIM, width=1)
             except tk.TclError:
                 pass
         if target:
@@ -371,8 +398,7 @@ class GameScreen(tk.Frame):
         )
         if not target:
             return
-        sid = target.get("scenario_id", 1)
-        data = self.scenarios.get(sid)
+        data = self.scenarios.get(target.get("scenario_id", 1))
         if not data:
             return
         audio = getattr(self.controller, "audio", None)
@@ -381,8 +407,7 @@ class GameScreen(tk.Frame):
         self.in_dialogue = True
         self.keys_pressed.clear()
         DialogueOverlay(
-            self,
-            data,
+            self, data,
             on_close=self._dialogue_closed,
             on_choice=self._on_choice,
             audio=audio,
@@ -406,17 +431,9 @@ class GameScreen(tk.Frame):
 
     def start_new_run(self):
         self.state.reset_run()
+        self.world_x = float(MAP_WIDTH // 2)
+        self.world_y = float(MAP_HEIGHT // 2)
         self._build_world()
-        self.player_x = MAP_WIDTH // 2 - self.player_w / 2
-        self.player_y = MAP_HEIGHT // 2 - self.player_h / 2
-        if self.canvas.find_withtag("player"):
-            self.canvas.delete("player")
-        self.player_id = self.canvas.create_oval(
-            self.player_x, self.player_y,
-            self.player_x + self.player_w, self.player_y + self.player_h,
-            fill=EMBER, outline=CREAM, width=2, tags="player",
-        )
-        self.canvas.tag_raise("player")
         self._update_camera()
         self._update_hud()
 
@@ -441,13 +458,6 @@ class GameScreen(tk.Frame):
                         pass
         self._apply_world_visuals()
         self._update_hud()
-        user = getattr(self.controller, "current_user", None)
-        if user and self.controller.db and self.state.run_id:
-            delta = events.choice_delta(choice_index, scenario_row)
-            key = ("a", "b", "c")[choice_index]
-            self.controller.db.save_choice(
-                self.state.run_id, int(scenario_row["id"]), key.upper(), delta
-            )
 
     def _dialogue_closed(self):
         self.in_dialogue = False
@@ -470,8 +480,7 @@ class GameScreen(tk.Frame):
         self.paused = True
         self.keys_pressed.clear()
         PauseOverlay(
-            self,
-            self.controller,
+            self, self.controller,
             on_resume=self._resume_pause,
             on_save=self._save,
         ).place(relx=0, rely=0, relwidth=1, relheight=1)
@@ -490,14 +499,15 @@ class GameScreen(tk.Frame):
         self._unbind_keys()
         user = getattr(self.controller, "current_user", None) or "guest"
         ending = self.state.ending_key()
-        score = self.state.restoration_percent()
-        items = self.state.memory_fragments
-        time_played = self.state.playtime_seconds
         if self.controller.db:
-            run_id = self.controller.db.save_run(
-                user, score, items, time_played, "normal", ending
+            self.controller.db.save_run(
+                user,
+                self.state.restoration_percent(),
+                self.state.memory_fragments,
+                self.state.playtime_seconds,
+                "normal",
+                ending,
             )
-            self.state.run_id = run_id
         game_state.save_game(user, self.state)
         self.controller.pending_ending = ending
         self.controller.show_frame("EndingScreen")

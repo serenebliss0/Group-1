@@ -10,7 +10,7 @@ from frontend.game_screen import GameScreen
 from frontend.leaderboard import LeaderboardScreen
 from frontend.settings import SettingsScreen
 from frontend.ending_screen import EndingScreen
-
+from frontend.act1 import ActOne
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -18,6 +18,7 @@ class MainApp(tk.Tk):
         self.title("What Remains?")
         self.pending_ending = "neutral"
         self.start_new_game = False
+        self._current_frame = None
 
         self.scale = 0.85
         self.width = int(self.winfo_screenwidth() * self.scale)
@@ -36,25 +37,23 @@ class MainApp(tk.Tk):
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
 
-        screen_classes = [
+        self.frames = {}
+        for cls in (
             SplashScreen,
             LoginScreen,
             SignupScreen,
             MainMenu,
+            ActOne,
             GameScreen,
             LeaderboardScreen,
             SettingsScreen,
             EndingScreen,
-        ]
-
-        self.frames = {}
-        for cls in screen_classes:
+        ):
             name = cls.__name__
             frame = cls(parent=self.container, controller=self)
             self.frames[name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self._current_frame = None
         if self.current_user:
             self.show_frame("MainMenu")
         else:
@@ -64,10 +63,10 @@ class MainApp(tk.Tk):
         frame = self.frames[page_name]
         if self._current_frame and hasattr(self._current_frame, "on_hide"):
             self._current_frame.on_hide()
+        self._current_frame = frame
         frame.tkraise()
         if hasattr(frame, "on_show"):
             frame.on_show()
-        self._current_frame = frame
 
     def on_close(self):
         self.audio.on_close()
