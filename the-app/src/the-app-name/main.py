@@ -1,5 +1,4 @@
 import tkinter as tk
-
 from backend import database, session
 from backend.audio import GameAudio
 from frontend.login import LoginScreen
@@ -11,6 +10,7 @@ from frontend.leaderboard import LeaderboardScreen
 from frontend.settings import SettingsScreen
 from frontend.ending_screen import EndingScreen
 from frontend.act1 import ActOne
+
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -50,28 +50,46 @@ class MainApp(tk.Tk):
             EndingScreen,
         ):
             name = cls.__name__
-            frame = cls(parent=self.container, controller=self)
-            self.frames[name] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
+            try:
+                frame = cls(parent=self.container, controller=self)
+                self.frames[name] = frame
+                frame.grid(row=0, column=0, sticky="nsew")
+            except Exception as e:
+                print(f"Error loading {name}: {e}")
 
+        self.after(200, self._startup)
+
+    def _startup(self):
+        self.update_idletasks()
         if self.current_user:
             self.show_frame("MainMenu")
         else:
             self.show_frame("SplashScreen")
 
     def show_frame(self, page_name):
-        frame = self.frames[page_name]
+        frame = self.frames.get(page_name)
+        if not frame:
+            print(f"Frame '{page_name}' not found")
+            return
         if self._current_frame and hasattr(self._current_frame, "on_hide"):
             self._current_frame.on_hide()
         self._current_frame = frame
         frame.tkraise()
         if hasattr(frame, "on_show"):
             frame.on_show()
+        if page_name == "GameScreen" and hasattr(frame, "reset_game"):
+            frame.reset_game()
 
     def on_close(self):
-        self.audio.on_close()
-        if self.db:
-            self.db.close()
+        try:
+            self.audio.on_close()
+        except Exception:
+            pass
+        try:
+            if self.db:
+                self.db.close()
+        except Exception:
+            pass
         self.destroy()
 
 
