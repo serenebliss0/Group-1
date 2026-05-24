@@ -64,5 +64,5 @@ class SplashScreen(tk.Frame):
             self.update_image_alpha(self.alpha)
             self.after(25, self.fade_out)
         else:
-            # Animation finished! Tell the main app container to flip to the login
+            # Tell the main app container to flip to the login
             self.controller.show_frame("LoginScreen")

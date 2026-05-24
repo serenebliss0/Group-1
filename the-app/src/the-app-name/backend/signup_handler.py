@@ -3,6 +3,7 @@ import sys
 import os
 from backend.database import Database
 from .logger import get_logger 
+import backend.logic as logic
 
 logger = get_logger("Signup Handler")
 # Ensuring the backend path is accessible
@@ -32,8 +33,8 @@ class SignupHandler:
         #Hash the password
         hashed_pw = self.hash_password(password)
 
-        if username == "omori":
-            pass
+        if username.lower() == "omori":
+            logic.wtf_value += 10
         # 3. Store in the database
         success = self.db.create_user(username, hashed_pw)
         return success
