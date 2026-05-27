@@ -1,22 +1,22 @@
-name: Build WhatRemains (macOS only)
+name: Build What Remains (macOS DMG)
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
-  build-mac:
+  build-macos:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14"
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -24,12 +24,25 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build app
+      - name: Build app (PyInstaller spec)
         run: |
           pyinstaller WhatRemains-mac.spec
 
-      - name: Upload mac build
+      - name: Create DMG
+        run: |
+          APP_NAME="What Remains"
+
+          mkdir -p dmg
+          cp -R "dist/$APP_NAME.app" dmg/
+
+          hdiutil create \
+            -volname "$APP_NAME" \
+            -srcfolder dmg \
+            -ov -format UDZO \
+            "WhatRemains-mac.dmg"
+
+      - name: Upload DMG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WhatRemains-macOS
-          path: dist/
+          name: WhatRemains-mac-dmg
+          path: WhatRemains-mac.dmg
