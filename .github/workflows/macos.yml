@@ -1,0 +1,13 @@
+build-macos:
+  runs-on: macos-latest
+  steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - run: pip install pyinstaller -r requirements.txt
+    - run: pyinstaller WhatRemains.spec
+    - uses: actions/upload-artifact@v3
+      with:
+        name: WhatRemains-macOS
+        path: dist/WhatRemains/

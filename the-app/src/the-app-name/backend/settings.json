@@ -1,0 +1,8 @@
+{
+  "music_volume": 1.0,
+  "sfx_volume": 0.55,
+  "text_speed": 80,
+  "fullscreen": false,
+  "reduced_motion": false,
+  "tutorial_seen": true
+}

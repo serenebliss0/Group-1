@@ -5,7 +5,7 @@ import tkinter as tk
 from backend.theme import BG, CREAM, DIM, EMBER, FOG, FONT_SUB, FONT_TITLE, FONT_UI
 
 
-class LeaderboardScreen(tk.Frame):
+class LeaderboardScreen2(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent, bg=BG)
         self.controller = controller
