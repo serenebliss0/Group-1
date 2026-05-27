@@ -104,7 +104,7 @@ class SettingsScreen(tk.Frame):
         if getattr(self.controller, "current_user", None):
             self.controller.show_frame("MainMenu")
         else:
-            self.controller.show_frame("SplashScreen")
+            self.controller.show_frame("MainMenu")
 
     def on_show(self):
         self.settings = load_settings()

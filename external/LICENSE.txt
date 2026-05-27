@@ -1,4 +1,4 @@
-WHAT REMAINS? — END USER LICENSE AGREEMENT
+WHAT REMAINS? — END USER LICENSE AGREEMENT (EULA)
 ==========================================
 Copyright (c) 2026 Semire Design Studio. All rights reserved.
 
@@ -9,14 +9,6 @@ Solving at Pan-Atlantic University, Lagos, Nigeria.
 PERMITTED USE
 You may install and run this software on your personal computer for
 personal, non-commercial use. You may share the installer freely.
-
-RESTRICTIONS
-You may not:
-- Modify, reverse engineer, or decompile this software
-- Redistribute modified versions of this software
-- Use any assets, narrative content, or design elements from this
-  software in any other project without written permission
-- Claim this work as your own
 
 DISCLAIMER
 This software is provided "as is" without warranty of any kind. Semire

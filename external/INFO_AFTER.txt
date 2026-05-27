@@ -11,12 +11,6 @@ GETTING STARTED
 - Press E to interact with objects
 - Press ESC to pause
 
-THE STORY
-You are a citizen of a dying city making impossible decisions.
-Until you realise you are not a citizen at all.
-
-There are three endings. One of them requires you to do nothing
-for two minutes. You'll know when.
 
 CONTROLS
   WASD / Arrow Keys — Move
@@ -29,12 +23,13 @@ Your progress is saved automatically. Your save file is stored
 locally on your computer and will persist between sessions.
 
 CREDITS
-  Concept & Backend   — Oluwasemire Ajayi
-  Frontend & Design   — Chimdike Agugoesi, Chianugo Onyia
-  Audio               — Kamsiyochi Ekenulo
-  Database            — Marvelous Moses-Okorie
-  Settings & Assets   — Osinachi Justin-Sonde
-  Backend & Narrative — Joseph Nnabueze
+Oluwasemire Ajayi:	Backend Lead, Frontend, DB, Figma	database.py, login_handler.py, scene.py, splash.py, signup_handler.py, logic.py, input_handler.py
+Joseph Nnabueze:	Backend, Figma	end_screen.py
+Chianugo Onyia:	Frontend, Database	menu.py, memory.py , scene2.py
+Chimdike Agugoesi:	Frontend, Figma Lead	splash.py, act_intro.py , Leaderboard.py
+Marvelous Moses-Okorie:	Database, Frontend	leaderboard_screen.py, local score display, prologue.py
+Osinachi Justin-Sonde:	Assets, Settings	settings.py, keybind reader
+Kamsiyochi Ekenulo:	Assets, Audio	Asset loader, sound manager, logic.py
 
   Inspired by the untitled scrap metal bull at the
   Yemisi Shyllon Museum of Art, Pan-Atlantic University, Lagos.

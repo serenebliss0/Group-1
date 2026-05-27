@@ -50,7 +50,7 @@ class InputManager:
         if "f12" in self.combo_buffer and "tab" in self.combo_buffer:
             if not self.easter_egg_triggered:
                 self.easter_egg_triggered = True
-                print("EASTER EGG UNLOCKED")
+                print("EASTER EGG UNLOCKED") ###Rem later
 
     def is_pressed(self, action):
         return action in self.pressed
