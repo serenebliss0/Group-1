@@ -5,6 +5,7 @@ import getpass
 import json
 
 wtf_value = 0
+username = getpass.getuser()
 
 logger = get_logger("Pygame")
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,6 +64,7 @@ class Mixer():
 
 class user_info:
     def get_real_username(self):
+        global username
         username = getpass.getuser()
         print(username)
 

@@ -1,5 +1,8 @@
 from pathlib import Path
 from tkinter import Canvas, Frame, Label, PhotoImage
+from backend.logger import get_logger
+
+logger = get_logger("Main Menu")
 
 try:
     from PIL import Image, ImageTk
@@ -8,7 +11,7 @@ except ImportError:
     ImageTk = None
 
 
-# ---------------- PATH (STABLE) ---------------- #
+#Resolve path
 BASE_DIR = Path(__file__).resolve().parent.parent
 ASSETS_PATH = BASE_DIR / "assets" / "images"
 IMAGE_REFS = []
@@ -32,7 +35,7 @@ def load_photo_image(path: str):
     return image
 
 
-# ---------------- BUTTON CLASS ---------------- #
+#Buttons
 class ImageButton(Label):
     def __init__(self, master=None, command=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -48,7 +51,7 @@ class ImageButton(Label):
             self._command()
 
 
-# ---------------- MAIN MENU ---------------- #
+
 class MainMenu(Frame):
 
     def __init__(self, parent, controller):
@@ -71,7 +74,6 @@ class MainMenu(Frame):
 
         canvas.place(x=0, y=0)
 
-        # ---------------- TEXT ---------------- #
 
         canvas.create_text(
             64,
@@ -139,13 +141,11 @@ class MainMenu(Frame):
             font=("Playfair Display", -11, "italic")
         )
 
-        # ---------------- DEBUG ---------------- #
 
-        print("BASE_DIR:", BASE_DIR)
-        print("ASSETS_PATH:", ASSETS_PATH)
-        print("ASSETS EXISTS:", ASSETS_PATH.exists())
+        logger.info(f"BASE_DIR: {BASE_DIR}")
+        logger.info(f"ASSETS_PATH: {ASSETS_PATH}")
+        logger.info(f"ASSETS EXISTS: {ASSETS_PATH.exists()}")
 
-        # ---------------- IMAGES ---------------- #
 
         try:
             self._img1 = load_photo_image(
@@ -159,7 +159,7 @@ class MainMenu(Frame):
             )
 
         except Exception as e:
-            print("FAILED image_1.png:", e)
+            logger.error(f"FAILED image_1.png: {e}")
 
         try:
             self._img2 = load_photo_image(
@@ -173,20 +173,20 @@ class MainMenu(Frame):
             )
 
         except Exception as e:
-            print("FAILED player.png:", e)
+            logger.error(f"FAILED player.png: {e}")
 
-        # ---------------- BUTTONS ---------------- #
 
         # Scene Button
         try:
             self._btn1_img = load_photo_image(
-                relative_to_assets("button_1.png")
+                relative_to_assets("begin_button.png")
             )
 
             ImageButton(
                 self,
                 image=self._btn1_img,
-                command=lambda: self.controller.show_frame("Scene2")
+                command=lambda: self.controller.show_frame("Prelude1"),
+                bg="black"
             ).place(
                 x=64,
                 y=559,
@@ -195,7 +195,7 @@ class MainMenu(Frame):
             )
 
         except Exception as e:
-            print("FAILED button_1.png:", e)
+            logger.error(f"FAILED button_1.png: {e}")
 
         # Leaderboard Button
         try:
@@ -215,9 +215,8 @@ class MainMenu(Frame):
             )
 
         except Exception as e:
-            print("FAILED main-leaderboard.png:", e)
+            logger.error("FAILED main-leaderboard.png: {e}")
 
-        # ---------------- SETTINGS BUTTON ---------------- #
 
         try:
             self._btn3_img = load_photo_image(
@@ -236,4 +235,4 @@ class MainMenu(Frame):
             )
 
         except Exception as e:
-            print("FAILED main-settings.png:", e)
+            logger.error("FAILED main-settings.png: {e}")

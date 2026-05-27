@@ -1,33 +1,31 @@
 import tkinter as tk
-import subprocess
-import sys
 
-def go_to_next(root):
-    subprocess.Popen([sys.executable, "Prelude2.py"])
-    root.destroy()
+class Prelude1(tk.Frame):
 
-def main():
-    root = tk.Tk()
-    root.title("Prelude 1")
-    root.geometry("800x600")
-    root.configure(bg="#eef1ec") 
-    
-    # Center the window on the screen
-    root.eval('tk::PlaceWindow . center')
+    def __init__(self, parent, controller):
+        super().__init__(parent, bg="#eef1ec")
 
-    text = tk.Label(
-        root, 
-        text="THE CITY WAKES UP SLOWLY. IT ALWAYS DOES.", 
-        font=("Times New Roman", 24), 
-        bg="#eef1ec", 
-        fg="#0b1c2c",
-        justify="center"
-    )
-    text.place(relx=0.5, rely=0.5, anchor="center")
+        self.controller = controller
+        self.after_id = None
 
-    # Wait 3000ms (3 seconds) then trigger go_to_next
-    root.after(3000, lambda: go_to_next(root))
-    root.mainloop()
+        tk.Label(
+            self,
+            text="THE CITY WAKES UP SLOWLY. IT ALWAYS DOES.",
+            font=("Times New Roman", 24),
+            bg="#eef1ec",
+            fg="#0b1c2c",
+            justify="center"
+        ).place(relx=0.5, rely=0.5, anchor="center")
 
-if __name__ == "__main__":
-    main()
+
+    def on_show(self):
+        self.after_id = self.after(
+            3000,
+            lambda: self.controller.show_frame("Prelude2")
+        )
+
+
+    def on_hide(self):
+        if self.after_id:
+            self.after_cancel(self.after_id)
+            self.after_id = None

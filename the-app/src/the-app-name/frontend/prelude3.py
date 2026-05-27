@@ -1,30 +1,41 @@
 import tkinter as tk
-import subprocess
-import sys
 
-def go_to_next(root):
-    subprocess.Popen([sys.executable, "Prelude4.py"])
-    root.destroy()
+class Prelude3(tk.Frame):
 
-def main():
-    root = tk.Tk()
-    root.title("Prelude 3")
-    root.geometry("800x600")
-    root.configure(bg="#eef1ec")
-    root.eval('tk::PlaceWindow . center')
+    def __init__(self, parent, controller):
+        super().__init__(parent, bg="#eef1ec")
 
-    text = tk.Label(
-        root, 
-        text="YOUR NAME IS [USERNAME] PEOPLE KNOW YOU HERE. OR THEY THINK THEY DO.", 
-        font=("Times New Roman", 24), 
-        bg="#eef1ec", 
-        fg="#0b1c2c",
-        justify="center"
-    )
-    text.place(relx=0.5, rely=0.5, anchor="center")
+        self.controller = controller
+        self.after_id = None
 
-    root.after(3000, lambda: go_to_next(root))
-    root.mainloop()
+        self.label = tk.Label(
+            self,
+            text="",
+            font=("Times New Roman", 24),
+            bg="#eef1ec",
+            fg="#0b1c2c",
+            justify="center",
+            wraplength=700
+        )
 
-if __name__ == "__main__":
-    main()
+        self.label.place(relx=0.5, rely=0.5, anchor="center")
+
+
+    def on_show(self):
+
+        username = getattr(self.controller, "user_info", "UNKNOWN")
+
+        self.label.config(
+            text=f"YOUR NAME IS {username}. PEOPLE KNOW YOU HERE. OR THEY THINK THEY DO."
+        )
+
+        self.after_id = self.after(
+            3000,
+            lambda: self.controller.show_frame("Prelude4")
+        )
+
+
+    def on_hide(self):
+        if self.after_id:
+            self.after_cancel(self.after_id)
+            self.after_id = None
