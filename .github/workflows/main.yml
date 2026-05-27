@@ -39,7 +39,7 @@ jobs:
           APP_NAME="What Remains"
 
           mkdir -p dmg
-          cp -R "dist/$APP_NAME.app" dmg/
+          cp -R "dist/WhatRemains.app" dmg/
 
           hdiutil create \
             -volname "$APP_NAME" \
