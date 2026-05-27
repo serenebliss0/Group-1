@@ -10,7 +10,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -24,7 +24,13 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build app (PyInstaller spec)
+      # 🔥 THIS IS THE FIX
+      - name: Create missing backend files
+        run: |
+          mkdir -p backend
+          touch backend/game.db
+
+      - name: Build with PyInstaller spec
         run: |
           pyinstaller WhatRemains-mac.spec
 
@@ -41,7 +47,7 @@ jobs:
             -ov -format UDZO \
             "WhatRemains-mac.dmg"
 
-      - name: Upload DMG artifact
+      - name: Upload DMG
         uses: actions/upload-artifact@v4
         with:
           name: WhatRemains-mac-dmg
