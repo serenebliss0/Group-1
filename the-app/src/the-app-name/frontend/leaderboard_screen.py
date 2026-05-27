@@ -2,6 +2,9 @@ import tkinter as tk
 import csv
 from pathlib import Path
 from backend.database import Database, Leaderboard
+from backend.logger import get_logger
+
+logger = get_logger("Leaderboard")
 
 # Design System Tokens (consistent with scene2.py and main_menu.py)
 BG = "#0C0904"       # Ruin Dark Background
@@ -88,10 +91,12 @@ class LeaderboardScreen(tk.Frame):
             highlightthickness=0,
             relief="ridge"
         )
-        self.canvas.place(x=0, y=0)
+        self.canvas.place(relwidth=1, relheight=1)
         
         # Keep track of active interactive row hover tags and shapes
         self.hover_bindings = []
+
+        self.update_ui()
 
     def get_top_scores(self):
         """

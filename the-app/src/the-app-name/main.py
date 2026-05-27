@@ -8,10 +8,10 @@ from frontend.signup import SignupScreen
 from frontend.splash import SplashScreen
 from frontend.main_menu import MainMenu
 from frontend.game_screen import GameScreen
-from frontend.leaderboard import LeaderboardScreen
 from frontend.settings import SettingsScreen
 from frontend.ending_screen import EndingScreen
 from frontend.act1 import ActOne
+from frontend.leaderboard_screen import LeaderboardScreen
 from frontend.scene2 import Scene2
 from frontend.prelude1 import Prelude1
 from frontend.prelude2 import Prelude2
@@ -102,7 +102,6 @@ class MainApp(tk.Tk):
             MainMenu,
             ActOne,
             GameScreen,
-            LeaderboardScreen,
             SettingsScreen,
             EndingScreen,
             Scene2,
@@ -111,6 +110,7 @@ class MainApp(tk.Tk):
             Prelude3,
             Prelude4,
             Prelude5,
+            LeaderboardScreen,
             EndScreen
         )
 
@@ -179,8 +179,6 @@ class MainApp(tk.Tk):
 
         self.destroy()
 
-    def show_frame(self, page_name):
-        self.frames[page_name].tkraise()
 
     print(logic.wtf_value) ## Remove this later
 

@@ -2,12 +2,22 @@ import tkinter as tk
 import sys
 
 class EndScreen(tk.Frame):
-    def __init__(self, parent, ending_type="THE RUIN", health=0, score=0, leaderboard_cb=None, play_again_cb=None):
+    def __init__(
+        self,
+        parent,
+        controller=None,
+        ending_type="THE RUIN",
+        health=0,
+        score=0,
+        leaderboard_cb=None,
+        play_again_cb=None
+    ):
         """
         Initializes the accurate End Screen based on design specs.
         """
         # Start with near-black for all to allow for the Green transition
         super().__init__(parent, bg="#0a0a0a")
+        self.controller = controller
         self.parent = parent
         self.ending_type = ending_type.upper()
         self.health = health
@@ -38,7 +48,11 @@ class EndScreen(tk.Frame):
         tk.Label(self.main_container, text=f"ENDING · {title_text}", fg="#888888", bg="#0a0a0a", 
                  font=("Helvetica", 10, "bold"), anchor="w").pack(fill="x")
         
-        tk.Frame(self.main_container, bg="#333333", height=1).pack(fill="x", pady=(5, 20), width=200, anchor="w")
+        tk.Frame(self.main_container, bg="#333333", height=1).pack(
+    fill="x",
+    pady=(5, 20),
+    anchor="w"
+)
         
         title = tk.Label(self.main_container, text=title_text, fg=title_color, bg="#0a0a0a", 
                          font=("Helvetica", 48, "bold"), anchor="w")

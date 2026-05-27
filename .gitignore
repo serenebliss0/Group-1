@@ -231,3 +231,8 @@ save_data.json
 **.iss
 **.exe
 **.tmp
+
+**.__pycache__
+**.pyc
+
+**.log
