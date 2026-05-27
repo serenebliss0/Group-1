@@ -57,3 +57,264 @@
 2026-05-24 22:17:21,182 - INFO - [Database] - Created user tables sucessfully
 2026-05-24 22:17:21,182 - INFO - [Database] - Database initialized successfully
 2026-05-24 22:18:06,083 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 21:40:02,557 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:40:02,557 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:40:02,557 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 21:40:02,569 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:40:02,569 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:54:08,025 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:54:08,026 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:54:08,026 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 21:54:08,038 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:54:08,038 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:54:08,223 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:54:08,223 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:54:10,536 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 21:54:10,538 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 21:54:10,540 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 21:54:10,540 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 21:54:10,540 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 21:54:10,608 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 21:54:10,703 - INFO - [Main] - Loaded: ActOne
+2026-05-27 21:54:10,709 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 21:54:10,710 - INFO - [Main] - Loaded: LeaderboardScreen
+2026-05-27 21:54:10,714 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 21:54:10,714 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 21:54:10,843 - INFO - [Main] - Loaded: Scene2
+2026-05-27 21:54:10,845 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 21:54:10,846 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 21:54:10,847 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 21:54:10,847 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 21:54:10,847 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 21:54:10,848 - ERROR - [Main] - Error loading EndScreen: EndScreen.__init__() got an unexpected keyword argument 'controller'
+2026-05-27 21:55:48,167 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 21:55:52,049 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:55:52,050 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:55:52,050 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 21:55:52,054 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:55:52,055 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:55:52,217 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:55:52,217 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:55:54,003 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 21:55:54,005 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 21:55:54,008 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 21:55:54,009 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 21:55:54,009 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 21:55:54,056 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 21:55:54,137 - INFO - [Main] - Loaded: ActOne
+2026-05-27 21:55:54,142 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 21:55:56,386 - INFO - [Main] - Loaded: LeaderboardScreen
+2026-05-27 21:55:56,388 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 21:55:56,388 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 21:55:56,471 - INFO - [Main] - Loaded: Scene2
+2026-05-27 21:55:56,472 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 21:55:56,472 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 21:55:56,472 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 21:55:56,472 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 21:55:56,472 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 21:55:56,472 - ERROR - [Main] - Error loading EndScreen: EndScreen.__init__() got an unexpected keyword argument 'controller'
+2026-05-27 21:56:36,704 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 21:56:41,686 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:56:41,686 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:56:41,686 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 21:56:41,689 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:56:41,689 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:56:41,844 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:56:41,844 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:56:43,640 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 21:56:43,641 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 21:56:43,643 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 21:56:43,643 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 21:56:43,643 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 21:56:43,704 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 21:56:43,788 - INFO - [Main] - Loaded: ActOne
+2026-05-27 21:56:43,792 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 21:56:45,146 - INFO - [Main] - Loaded: LeaderboardScreen
+2026-05-27 21:56:45,148 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 21:56:45,148 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 21:56:45,232 - INFO - [Main] - Loaded: Scene2
+2026-05-27 21:56:45,233 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 21:56:45,233 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 21:56:45,233 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 21:56:45,233 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 21:56:45,233 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 21:56:45,233 - ERROR - [Main] - Error loading EndScreen: EndScreen.__init__() got an unexpected keyword argument 'controller'
+2026-05-27 22:00:39,236 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 22:00:43,404 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:00:43,405 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:00:43,405 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 22:00:43,407 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:00:43,407 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:00:43,602 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:00:43,602 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:00:45,363 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 22:00:45,366 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 22:00:45,368 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 22:00:45,369 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 22:00:45,369 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 22:00:45,420 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 22:00:45,506 - INFO - [Main] - Loaded: ActOne
+2026-05-27 22:00:45,513 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 22:00:47,519 - INFO - [Main] - Loaded: LeaderboardScreen
+2026-05-27 22:00:47,520 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 22:00:47,521 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 22:00:47,626 - INFO - [Main] - Loaded: Scene2
+2026-05-27 22:00:47,627 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 22:00:47,627 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 22:00:47,627 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 22:00:47,627 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 22:00:47,628 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 22:00:47,629 - ERROR - [Main] - Error loading EndScreen: bad option "-width": must be -after, -anchor, -before, -expand, -fill, -in, -ipadx, -ipady, -padx, -pady, or -side
+2026-05-27 22:03:37,714 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 22:03:43,419 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:03:43,419 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:03:43,419 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 22:03:43,422 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:03:43,422 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:03:43,575 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:03:43,575 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:03:45,322 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 22:03:45,323 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 22:03:45,325 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 22:03:45,325 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 22:03:45,325 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 22:03:45,395 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 22:03:45,472 - INFO - [Main] - Loaded: ActOne
+2026-05-27 22:03:45,476 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 22:03:47,020 - INFO - [Main] - Loaded: LeaderboardScreen
+2026-05-27 22:03:47,021 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 22:03:47,022 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 22:03:47,099 - INFO - [Main] - Loaded: Scene2
+2026-05-27 22:03:47,100 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 22:03:47,100 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 22:03:47,101 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 22:03:47,101 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 22:03:47,101 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 22:03:47,113 - INFO - [Main] - Loaded: EndScreen
+2026-05-27 22:04:31,608 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 22:04:34,829 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:04:34,829 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:04:34,829 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 22:04:34,832 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:04:34,832 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:04:34,958 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:04:34,958 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:04:36,729 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 22:04:36,731 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 22:04:36,734 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 22:04:36,734 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 22:04:36,734 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 22:04:36,784 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 22:04:36,859 - INFO - [Main] - Loaded: ActOne
+2026-05-27 22:04:36,865 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 22:04:36,867 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 22:04:36,868 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 22:04:36,989 - INFO - [Main] - Loaded: Scene2
+2026-05-27 22:04:36,990 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 22:04:36,990 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 22:04:36,990 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 22:04:36,991 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 22:04:36,991 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 22:04:36,994 - INFO - [Main] - Loaded: EndScreen
+2026-05-27 22:05:25,522 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 22:05:29,407 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:05:29,407 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:05:29,407 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 22:05:29,410 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:05:29,411 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:05:29,524 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:05:29,524 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:05:31,200 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 22:05:31,202 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 22:05:31,204 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 22:05:31,204 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 22:05:31,204 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 22:05:31,258 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 22:05:31,351 - INFO - [Main] - Loaded: ActOne
+2026-05-27 22:05:31,357 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 22:05:31,359 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 22:05:31,360 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 22:05:31,480 - INFO - [Main] - Loaded: Scene2
+2026-05-27 22:05:31,481 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 22:05:31,482 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 22:05:31,482 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 22:05:31,482 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 22:05:31,482 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 22:05:31,485 - INFO - [Main] - Loaded: EndScreen
+2026-05-27 22:07:54,329 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 22:07:57,563 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:07:57,563 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:07:57,563 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 22:07:57,567 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:07:57,567 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:07:57,679 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:07:57,680 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:07:59,406 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 22:07:59,407 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 22:07:59,410 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 22:07:59,411 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 22:07:59,411 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 22:07:59,461 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 22:07:59,542 - INFO - [Main] - Loaded: ActOne
+2026-05-27 22:07:59,548 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 22:07:59,550 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 22:07:59,550 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 22:07:59,665 - INFO - [Main] - Loaded: Scene2
+2026-05-27 22:07:59,666 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 22:07:59,666 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 22:07:59,666 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 22:07:59,667 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 22:07:59,667 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 22:07:59,669 - INFO - [Main] - Loaded: EndScreen
+2026-05-27 22:10:38,600 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 22:11:44,847 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:11:44,847 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:11:44,847 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 22:11:44,850 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:11:44,850 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:11:44,941 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:11:44,941 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:11:46,771 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 22:11:46,772 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 22:11:46,776 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 22:11:46,777 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 22:11:46,777 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 22:11:46,821 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 22:11:46,884 - INFO - [Main] - Loaded: ActOne
+2026-05-27 22:11:46,890 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 22:11:46,891 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 22:11:46,891 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 22:11:46,988 - INFO - [Main] - Loaded: Scene2
+2026-05-27 22:11:46,988 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 22:11:46,989 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 22:11:46,989 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 22:11:46,989 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 22:11:46,989 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 22:11:46,991 - INFO - [Main] - Loaded: EndScreen
+2026-05-27 22:12:17,233 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 22:12:20,539 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:12:20,540 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:12:20,540 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 22:12:20,543 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:12:20,543 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:12:20,652 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 22:12:20,652 - INFO - [Database] - Database initialized successfully
+2026-05-27 22:12:22,304 - INFO - [Main] - Loaded: LoginScreen
+2026-05-27 22:12:22,305 - INFO - [Main] - Loaded: SignupScreen
+2026-05-27 22:12:22,309 - INFO - [Main Menu] - BASE_DIR: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name
+2026-05-27 22:12:22,309 - INFO - [Main Menu] - ASSETS_PATH: C:\Users\Semire\Downloads\My Programming Journey 3\Group-1\the-app\src\the-app-name\assets\images
+2026-05-27 22:12:22,310 - INFO - [Main Menu] - ASSETS EXISTS: True
+2026-05-27 22:12:22,357 - INFO - [Main] - Loaded: MainMenu
+2026-05-27 22:12:22,430 - INFO - [Main] - Loaded: ActOne
+2026-05-27 22:12:22,434 - INFO - [Main] - Loaded: GameScreen
+2026-05-27 22:12:22,435 - INFO - [Main] - Loaded: SettingsScreen
+2026-05-27 22:12:22,436 - INFO - [Main] - Loaded: EndingScreen
+2026-05-27 22:12:22,541 - INFO - [Main] - Loaded: Scene2
+2026-05-27 22:12:22,543 - INFO - [Main] - Loaded: Prelude1
+2026-05-27 22:12:22,543 - INFO - [Main] - Loaded: Prelude2
+2026-05-27 22:12:22,544 - INFO - [Main] - Loaded: Prelude3
+2026-05-27 22:12:22,545 - INFO - [Main] - Loaded: Prelude4
+2026-05-27 22:12:22,545 - INFO - [Main] - Loaded: Prelude5
+2026-05-27 22:12:24,450 - INFO - [Main] - Loaded: LeaderboardScreen
+2026-05-27 22:12:24,452 - INFO - [Main] - Loaded: EndScreen
+2026-05-27 22:13:59,284 - WARNING - [Database] - The connection to the database was closed
