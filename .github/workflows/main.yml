@@ -24,22 +24,34 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      # 🔥 THIS IS THE FIX
-      - name: Create missing backend files
+      # ✅ FIXED: match YOUR spec path exactly
+      - name: Create required backend files
         run: |
-          mkdir -p backend
-          touch backend/game.db
+          mkdir -p the-app/src/the-app-name/backend
+          touch the-app/src/the-app-name/backend/game.db
+          touch the-app/src/the-app-name/backend/keybinds.json
 
       - name: Build with PyInstaller spec
         run: |
           pyinstaller WhatRemains-mac.spec
 
+      # 🔥 FIXED: robust DMG step (no wrong assumptions)
       - name: Create DMG
         run: |
-          APP_NAME="What Remains"
+          APP_NAME="WhatRemains"
 
           mkdir -p dmg
-          cp -R "dist/WhatRemains.app" dmg/
+
+          # PyInstaller macOS output handling (correct + stable)
+          if [ -d "dist/WhatRemains.app" ]; then
+            cp -R "dist/WhatRemains.app" dmg/
+          elif [ -d "dist/WhatRemains" ]; then
+            cp -R "dist/WhatRemains" dmg/
+          else
+            echo "❌ Build failed: no output found in dist/"
+            ls -R dist
+            exit 1
+          fi
 
           hdiutil create \
             -volname "$APP_NAME" \
@@ -47,7 +59,7 @@ jobs:
             -ov -format UDZO \
             "WhatRemains-mac.dmg"
 
-      - name: Upload DMG
+      - name: Upload DMG artifact
         uses: actions/upload-artifact@v4
         with:
           name: WhatRemains-mac-dmg
