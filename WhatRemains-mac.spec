@@ -16,7 +16,6 @@ a = Analysis(
     datas=[
         (str(APP_DIR / "assets"), "assets"),
         (str(APP_DIR / "backend" / "keybinds.json"), "backend"),
-        (str(APP_DIR / "backend" / "game.db"), "backend"),
         (str(APP_DIR / "assets" / "scenarios.csv"), "assets"),
         (str(APP_DIR / "assets" / "scenarios.json"), "assets"),
     ],
