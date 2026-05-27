@@ -6,13 +6,25 @@ from PIL import Image, ImageTk
 from .pause import PauseMenu
 from .game_over import GameOverScreen
 from .win_screen import WinScreen
+from backend.logger import get_logger
 from backend.database import Leaderboard
 
-
+get_logger("Scene2")
 
 BG = "#1a0a00"
 EMBER = "#C8541A"
 CREAM = "#f5ead8"
+
+import sys
+from pathlib import Path
+
+def get_base_dir():
+    import sys
+    from pathlib import Path
+
+    if hasattr(sys, "_MEIPASS"):
+        return Path(sys._MEIPASS)
+    return Path(__file__).resolve().parents[1]
 
 
 class Scene2(tk.Frame):
@@ -23,9 +35,11 @@ class Scene2(tk.Frame):
         self.controller = controller
 
         # ---------------- PATHS ---------------- #
-        BASE_DIR = Path(__file__).resolve().parent
-        SCENARIOS_PATH = BASE_DIR / "scenarios.json"
-        ASSETS = BASE_DIR.parent / "assets" / "images"
+        BASE_DIR = get_base_dir()
+
+        ASSETS = BASE_DIR / "assets" / "images"
+        #IMAGES = ASSETS / "images"
+        SCENARIOS_PATH = BASE_DIR / "assets" / "scenarios.json"
 
         # ---------------- MAP ---------------- #
         self.map_img_raw = Image.open(ASSETS / "map.png")

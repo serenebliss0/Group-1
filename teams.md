@@ -41,3 +41,11 @@ Works with the backend team to implement and secure both databases (SQLite and S
 - Oluwasemire Ajayi
 - Chianugo Onyia
 - Marvelous Moses-Okorie
+
+## Story Team
+
+Creates the narrative content of the game
+
+- Chimdike Aguogoesi
+- Osinachi Justin-Sonde
+- Oluwasemire Ajayi

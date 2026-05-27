@@ -15,7 +15,8 @@ Built for **COS 102: Introduction to Problem Solving**, Pan-Atlantic University,
 
 The city is dying. You make choices. The choices have weight.
 
-There are three endings. One of them requires you to do nothing for two minutes.
+There are three endings.
+The ending you get depends on how you treated the city.
 
 ---
 
@@ -32,7 +33,7 @@ There are three endings. One of them requires you to do nothing for two minutes.
 | Auth | bcrypt |
 | Environment | python-dotenv |
 | Design | Figma |
-| Internal File Handlers | pathlib |
+| Internal File Handlers | pathlib, sys |
 | Version control | Git + GitHub |
 | Keybinds | JSON |
 | Log Handlers | RotatingFileHandler |
@@ -50,36 +51,94 @@ Group-1/
 ├── the-app/
 │   └── src/
 │       └── the-app-name/
-│           ├── main.py               ← App entry point
+│           ├── main.py                      # App entry point (Tkinter controller)
+│           ├── app.py
+│           ├── runtime_paths.py
+│           ├── settings.json
+│
 │           ├── backend/
-│           │   ├── database.py       ← SQLite + Supabase
-│           │   ├── login_handler.py  ← Authentication
+│           │   ├── audio.py                 # Game audio system
+│           │   ├── database.py              # SQLite + Supabase sync
+│           │   ├── data_handler.py
+│           │   ├── events.py
+│           │   ├── game_state.py
+│           │   ├── input_manager.py
+│           │   ├── keybinds.json
+│           │   ├── logger.py                # Central logging system
+│           │   ├── logic.py                 # Core game logic + flow control
+│           │   ├── login_handler.py
+│           │   ├── map_renderer.py
+│           │   ├── runtime_paths.py
+│           │   ├── save_data.json
+│           │   ├── scenarios.json
+│           │   ├── session.py
+│           │   ├── session.json
+│           │   ├── settings.json
+│           │   ├── settings_handler.py
 │           │   ├── signup_handler.py
-│           │   ├── logic.py          ← Game loop, audio
-│           │   ├── logger.py ← Creates and handles log files for each module
-│           │   ├── game.db           ← Local database
-│           │   └── keybinds.json     ← User keybind settings
+│           │   ├── theme.py
+│           │   ├── world.py
+│           │   └── saves/
+│           │       └── serenebliss0.json
+│
 │           ├── frontend/
 │           │   ├── splash.py
 │           │   ├── login.py
 │           │   ├── signup.py
+│           │   ├── main_menu.py
 │           │   ├── menu.py
-│           │   ├── scene.py          ← Core game screen
-│           │   ├── act_intro.py
-│           │   ├── memory.py         ← Memory fragment screens
-│           │   ├── break_screen.py   ← Act III glitch screen
-│           │   ├── end_screen.py
-│           │   ├── leaderboard_screen.py
 │           │   ├── settings.py
-│           │   └── stats.py
-│           └── assets/
-│               ├── images/
-│               ├── fonts/
-│               └── sounds/
-├── scenarios.csv                     ← All scenario content
+│           │   ├── leaderboard_screen.py
+│           │   ├── game_screen.py
+│           │   ├── scene1.py
+│           │   ├── scene2.py              
+│           │   ├── act1.py
+│           │   ├── prelude1.py
+│           │   ├── prelude2.py
+│           │   ├── prelude3.py
+│           │   ├── prelude4.py
+│           │   ├── prelude5.py
+│           │   ├── ending_screen.py
+│           │   ├── end_screen.py
+│           │   ├── game_over.py
+│           │   ├── win_screen.py
+│           │   ├── pause.py
+│           │   ├── pause_menu.py
+│           │   ├── dialogue.py
+│           │   ├── dialogue_overlay.py
+│           │   ├── tutorial_overlay.py
+│           │   ├── typewriter.py
+│           │   ├── runtime_paths.py
+│           │   ├── input_recv_example.py
+│           │   ├── scenarios.json         # duplicated runtime copy (bundled)
+│           │   └── __init__.py
+│
+│           ├── assets/
+│           │   ├── scenarios.json
+│           │   ├── scenarios.csv
+│           │   ├── images/
+│           │   │   ├── map.png
+│           │   │   ├── factory_fixed.png
+│           │   │   ├── player.png
+│           │   │   ├── splash.png
+│           │   │   ├── main_menu assets...
+│           │   │   └── icons...
+│           │   ├── fonts/
+│           │   └── sounds/
+│           │       └── demo_intro.wav
+│
+│           ├── logs/
+│           │   ├── app_debug.log
+│           │   └── game.log
+│
+│           ├── main.py.cpython-314.pyc    # (IGNORE - build artifact)
+│           └── app.py.cpython-314.pyc     # (IGNORE - build artifact)
+│
 ├── tests/
 │   └── test_database.py
+│
 ├── requirements.txt
+├── scenarios.csv
 └── .github/
     └── workflows/
         └── python-ci.yml

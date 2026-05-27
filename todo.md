@@ -84,6 +84,8 @@ pip freeze > requirements.txt
 
 By now you should've tried running the code by clicking that shiny run button up in VSCode just to be hit with `Error: Module not found`. Due to our repo being structured as a python package for later, you'll need to run it a bit differently:
 
+- Make sure you're in the `Group-1` folder
+
 - If you haven't already, create your python virtual environment (venv)
 
 ``` Powershell
@@ -104,13 +106,13 @@ You should see (venv) in your terminal
 pip install -r requirements.txt
 ```
 
-- Make sure you're in the correct directory
+- cd over to the app's directory:
 
 ```Powershell
 cd the-app/src/the-app-name
 ```
 
-
+---
 
 - Now you can run code by specifying its filename
 
@@ -120,11 +122,16 @@ python -m main
 
 This runs main.py
 
+---
+
 ```python
 python -m backend.database
 ```
 
 This runs database.py
+
+---
+
 
 ```python
 python -m frontend.login
