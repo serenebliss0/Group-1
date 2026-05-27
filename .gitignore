@@ -225,3 +225,9 @@ logs/
 
 session.json
 game.db
+settings.json
+save_data.json
+
+**.iss
+**.exe
+**.tmp

@@ -1,0 +1,46 @@
+INSTALLATION COMPLETE — WHAT REMAINS?
+======================================
+
+What Remains? has been successfully installed.
+
+GETTING STARTED
+- Launch the game from your Desktop shortcut or Start Menu
+- Create an account to save your progress and appear on the
+  global leaderboard
+- Use WASD or Arrow Keys to move
+- Press E to interact with objects
+- Press ESC to pause
+
+THE STORY
+You are a citizen of a dying city making impossible decisions.
+Until you realise you are not a citizen at all.
+
+There are three endings. One of them requires you to do nothing
+for two minutes. You'll know when.
+
+CONTROLS
+  WASD / Arrow Keys — Move
+  E                 — Interact
+  ESC               — Pause
+  1 / 2 / 3         — Make a choice
+
+SAVE DATA
+Your progress is saved automatically. Your save file is stored
+locally on your computer and will persist between sessions.
+
+CREDITS
+  Concept & Backend   — Oluwasemire Ajayi
+  Frontend & Design   — Chimdike Agugoesi, Chianugo Onyia
+  Audio               — Kamsiyochi Ekenulo
+  Database            — Marvelous Moses-Okorie
+  Settings & Assets   — Osinachi Justin-Sonde
+  Backend & Narrative — Joseph Nnabueze
+
+  Inspired by the untitled scrap metal bull at the
+  Yemisi Shyllon Museum of Art, Pan-Atlantic University, Lagos.
+
+  COS 102 · Group 1 · Pan-Atlantic University · 2026
+
+"It's ugly, isn't it? Keep looking."
+
+Enjoy the game.

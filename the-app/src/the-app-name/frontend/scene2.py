@@ -1,211 +1,351 @@
 import tkinter as tk
+import json
 from pathlib import Path
-import csv
+from PIL import Image, ImageTk
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-ASSETS = BASE_DIR / "assets" / "images"
+from .pause import PauseMenu
+from .game_over import GameOverScreen
+from .win_screen import WinScreen
+from backend.database import Leaderboard
 
-# Design System Tokens
-BG = "#1a0a00"       # Ruin Dark Background
-EMBER = "#C8541A"    # Primary Accent
-FOG = "#b8a99a"      # Subdued Text
-CREAM = "#f5ead8"    # Body Text
-DIM = "#4a3728"      # Ash Secondary Text
 
-class SceneScreen(tk.Frame):
+
+BG = "#1a0a00"
+EMBER = "#C8541A"
+CREAM = "#f5ead8"
+
+
+class Scene2(tk.Frame):
+
     def __init__(self, parent, controller):
         super().__init__(parent, bg=BG)
+
         self.controller = controller
-        
-        # Map Coordinates Configuration
-        self.map_width = 3840
-        self.map_height = 2160
-        
-        # Player position initialization (Centered in the virtual world matrix)
-        self.player_x = 1920
-        self.player_y = 1080
+
+        # ---------------- PATHS ---------------- #
+        BASE_DIR = Path(__file__).resolve().parent
+        SCENARIOS_PATH = BASE_DIR / "scenarios.json"
+        ASSETS = BASE_DIR.parent / "assets" / "images"
+
+        # ---------------- MAP ---------------- #
+        self.map_img_raw = Image.open(ASSETS / "map.png")
+
+        self.ZOOM = 2.5
+
+        self.map_img_raw = self.map_img_raw.resize(
+            (
+                int(self.map_img_raw.width * self.ZOOM),
+                int(self.map_img_raw.height * self.ZOOM)
+            ),
+            Image.Resampling.LANCZOS
+        )
+
+        self.map_img = ImageTk.PhotoImage(self.map_img_raw)
+        self.map_width, self.map_height = self.map_img_raw.size
+
+        # ---------------- PLAYER ---------------- #
+        self.player_x = self.map_width // 2
+        self.player_y = self.map_height // 2
         self.move_speed = 12
-        
-        # Load Scenario Content CSV Database 
-        self.scenarios = self._load_scenarios()
-        
+
+        # ---------------- TIMER ---------------- #
+        self.default_time = 10 * 60
+        self.time_left = self.default_time
+        self.timer_running = False
+        self.game_over = False
+
+        # ---------------- STATE ---------------- #
+        self.fixed_nodes = set()
+        self.fixed_images = {}
+        self.current_dialog_node = None
+
+        # ---------------- LOAD DATA ---------------- #
+        with open(SCENARIOS_PATH, "r", encoding="utf-8") as f:
+            self.scenarios = json.load(f)
+
+        # ---------------- UI ---------------- #
         self._build_ui()
         self._bind_inputs()
-        
-    def _load_scenarios(self):
-        scenarios = {}
-        csv_path = Path(__file__).resolve().parent.parent.parent / "scenarios.csv"
-        try:
-            with open(csv_path, mode='r', encoding='utf-8') as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    scenarios[int(row['id'])] = row
-        except Exception:
-            # Fallback mock data if file initialization framework breaks
-            scenarios[1] = {
-                "name": "The Phone Board",
-                "text": "This circuit board was a phone. It stopped charging in 2022. It ended up in a pile in Alaba Market...",
-                "choice_a": "Examine closer", "choice_b": "Ignore it", "choice_c": "Leave district"
-            }
-        return scenarios
+        self._start_timer()
 
+    # ==================================================
+    def reset_game(self):
+
+        self.game_over = False
+        self.timer_running = False
+        self.time_left = self.default_time
+
+        self.player_x = self.map_width // 2
+        self.player_y = self.map_height // 2
+
+        self.fixed_nodes.clear()
+        self.fixed_images.clear()
+        self.current_dialog_node = None
+
+        self.info_box.place_forget()
+
+        self.canvas.coords(
+            self.player_avatar,
+            self.player_x - 12,
+            self.player_y - 12,
+            self.player_x + 12,
+            self.player_y + 12
+        )
+
+        self._start_timer()
+
+    # ==================================================
     def _build_ui(self):
-        # 1. Setup Camera Viewport Window Canvas Frame
+
         self.canvas = tk.Canvas(self, bg=BG, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
-        self.canvas.configure(scrollregion=(0, 0, self.map_width, self.map_height))
-        
-        # 2. Add Static Environmental Background Assets or Vector representations
-        # Act I - Calm, structured, peaceful layout tone
-        self.canvas.create_rectangle(100, 100, 3740, 2060, outline=DIM, width=2, dash=(4,4))
-        
-        # Scattered Invisible Interactive Elements hinted by context outlines
-        self.interactive_nodes = [
-            {"id": 1, "x": 1500, "y": 900, "radius": 40, "triggered": False, "obj_id": None},
-            {"id": 2, "x": 2400, "y": 1300, "radius": 40, "triggered": False, "obj_id": None}
-        ]
-        
-        for node in self.interactive_nodes:
-            node["obj_id"] = self.canvas.create_oval(
-                node["x"] - node["radius"], node["y"] - node["radius"],
-                node["x"] + node["radius"], node["y"] + node["radius"],
-                outline=DIM, fill="", width=1
-            )
-            
-        # 3. Create Player Representation Element Tracker
-        self.player_avatar = self.canvas.create_oval(
-            self.player_x - 12, self.player_y - 12,
-            self.player_x + 12, self.player_y + 12,
-            fill=EMBER, outline=CREAM, width=2
+
+        self.canvas.configure(
+            scrollregion=(0, 0, self.map_width, self.map_height)
         )
-        
-        # Initial Viewport Tracking Center Lock
+
+        self.canvas.create_image(0, 0, image=self.map_img, anchor="nw")
+
+        tk.Button(
+            self,
+            text="II",
+            command=self._open_pause,
+            bg="#0C0904",
+            fg="#E8DCC8"
+        ).place(x=20, y=20, width=40, height=40)
+
+        self.timer_label = tk.Label(
+            self,
+            text="10:00",
+            bg=BG,
+            fg=CREAM,
+            font=("Courier", 14, "bold")
+        )
+        self.timer_label.place(relx=0.98, rely=0.02, anchor="ne")
+
+        self.info_box = tk.Frame(self, bg="#2a1a10")
+
+        self.info_title = tk.Label(self.info_box, text="", bg="#2a1a10", fg=CREAM)
+        self.info_title.pack()
+
+        self.info_text = tk.Label(self.info_box, text="", bg="#2a1a10", fg=CREAM, wraplength=260)
+        self.info_text.pack()
+
+        self.fix_button = tk.Button(
+            self.info_box,
+            text="FIX",
+            bg="green",
+            fg="white",
+            command=self._fix_current_node
+        )
+
+        self.info_box.place_forget()
+
+        self.interactive_nodes = [
+            {
+                "id": item["id"],
+                "x": item["x"],
+                "y": item["y"],
+                "radius": item.get("radius", 70),
+                "type": item.get("type", "clean"),
+                "name": item["name"],
+                "text": item["text"]
+            }
+            for item in self.scenarios
+        ]
+
+        self.player_avatar = self.canvas.create_oval(
+            self.player_x - 12,
+            self.player_y - 12,
+            self.player_x + 12,
+            self.player_y + 12,
+            fill=EMBER,
+            outline=CREAM
+        )
+
         self._update_camera()
 
+    # ==================================================
+    def _update_camera(self):
+
+        w = self.canvas.winfo_width() or 1200
+        h = self.canvas.winfo_height() or 800
+
+        sx = (self.player_x - w / 2) / self.map_width
+        sy = (self.player_y - h / 2) / self.map_height
+
+        self.canvas.xview_moveto(max(0, min(1, sx)))
+        self.canvas.yview_moveto(max(0, min(1, sy)))
+
+    # ==================================================
     def _bind_inputs(self):
-        # Bind WASD Movements mapping
+
         self.bind_all("<w>", lambda e: self._move(0, -self.move_speed))
         self.bind_all("<s>", lambda e: self._move(0, self.move_speed))
         self.bind_all("<a>", lambda e: self._move(-self.move_speed, 0))
         self.bind_all("<d>", lambda e: self._move(self.move_speed, 0))
-        
-        # Interaction System key mappings
-        self.bind_all("<e>", lambda e: self._check_interaction())
-        self.bind_all("<Tab>", lambda e: self._check_interaction())
-        
-        # System State Pause execution keybind
-        self.bind_all("<Escape>", lambda e: self._open_pause_menu())
 
+        self.bind_all("<Escape>", lambda e: self._open_pause())
+
+    # ==================================================
+    def _start_timer(self):
+
+        if self.timer_running:
+            return
+
+        self.timer_running = True
+        self._tick_timer()
+
+    # ==================================================
+    def _tick_timer(self):
+
+        if self.game_over:
+            return
+
+        m = self.time_left // 60
+        s = self.time_left % 60
+
+        self.timer_label.config(text=f"{m:02d}:{s:02d}")
+
+        if self.time_left > 0:
+            self.time_left -= 1
+            self.after(1000, self._tick_timer)
+        else:
+            self._trigger_game_over()
+
+    # ==================================================
+        # ── Endings ────────────────────────────────────────
+    def _trigger_game_over(self):
+        self.game_over     = False
+        self.timer_running = False
+        fixed_count, score = self._calc_score()
+        self._save_and_submit(fixed_count, score, "ruin")
+        self.controller.pending_ending = "ruin"
+        self.controller.pending_score  = score
+        self.controller.show_frame("EndingScreen")
+ 
+    def _trigger_win(self):
+        self.game_over     = True
+        self.timer_running = False
+        fixed_count, score = self._calc_score()
+        self._save_and_submit(fixed_count, score, "green")
+        self.controller.pending_ending = "green"
+        self.controller.pending_score  = score
+        self.controller.show_frame("EndingScreen")
+ 
+    def _calc_score(self):
+        pollution = [n for n in self.interactive_nodes if n["type"] == "pollution"]
+        fixed     = [n for n in pollution if n["id"] in self.fixed_nodes]
+        total     = len(pollution)
+        score     = int((len(fixed) / total) * 100) if total > 0 else 0
+        return len(fixed), score
+ 
+    def _save_and_submit(self, fixed_count, score, ending):
+        user        = getattr(self.controller, "current_user", "guest") or "guest"
+        time_played = self.default_time - self.time_left
+        try:
+            self.controller.db.save_run(
+                user, score, fixed_count, time_played, "normal", ending
+            )
+        except Exception as e:
+            print(f"DB save failed: {e}")
+        try:
+            lb = Leaderboard()
+            lb.submit_score(user, score, fixed_count, time_played)
+        except Exception as e:
+            print(f"Leaderboard submit failed: {e}")
+    # ==================================================
+    def _check_win_condition(self):
+
+        for n in self.interactive_nodes:
+            if n["type"] == "pollution" and n["id"] not in self.fixed_nodes:
+                return
+        self._trigger_win()
+
+    # ==================================================
     def _move(self, dx, dy):
-        """Processes target steps checking bounding box collisions with map borders."""
-        new_x = self.player_x + dx
-        new_y = self.player_y + dy
-        
-        if 0 <= new_x <= self.map_width:
-            self.player_x = new_x
-        if 0 <= new_y <= self.map_height:
-            self.player_y = new_y
-            
+
+        if self.game_over:
+            return
+
+        self.player_x += dx
+        self.player_y += dy
+
         self.canvas.coords(
             self.player_avatar,
-            self.player_x - 12, self.player_y - 12,
-            self.player_x + 12, self.player_y + 12
+            self.player_x - 12,
+            self.player_y - 12,
+            self.player_x + 12,
+            self.player_y + 12
         )
+
         self._update_camera()
-        self._check_proximity_hints()
+        self._check_proximity()
 
-    def _update_camera(self):
-        """Centres the canvas viewport scroll coordinates tracking the player position."""
-        self.update_idletasks()
-        win_w = self.canvas.winfo_width() or 1200
-        win_h = self.canvas.winfo_height() or 800
-        
-        scroll_x = (self.player_x - (win_w / 2)) / self.map_width
-        scroll_y = (self.player_y - (win_h / 2)) / self.map_height
-        
-        self.canvas.xview_moveto(max(0.0, min(scroll_x, 1.0)))
-        self.canvas.yview_moveto(max(0.0, min(scroll_y, 1.0)))
+    # ==================================================
+    def _check_proximity(self):
 
-    def _check_proximity_hints(self):
-        """Slightly shifts item outlines color dynamically when approaching."""
         for node in self.interactive_nodes:
-            distance = ((self.player_x - node["x"])**2 + (self.player_y - node["y"])**2)**0.5
-            if distance < 120:
-                self.canvas.itemconfig(node["obj_id"], outline=FOG)
-            else:
-                self.canvas.itemconfig(node["obj_id"], outline=DIM)
 
-    def _check_interaction(self):
-        """Examines nearest item matrices coordinates to spawn modal dialog overlays."""
-        for node in self.interactive_nodes:
-            distance = ((self.player_x - node["x"])**2 + (self.player_y - node["y"])**2)**0.5
-            if distance <= node["radius"] + 15:
-                self._launch_dialog(node["id"])
+            # skip fixed pollution nodes
+            if node["type"] == "pollution" and node["id"] in self.fixed_nodes:
+                continue
+
+            dist = (
+                (self.player_x - node["x"]) ** 2 +
+                (self.player_y - node["y"]) ** 2
+            ) ** 0.5
+
+            if dist < 150:
+
+                self.current_dialog_node = node
+
+                self.info_title.config(text=node["name"])
+                self.info_text.config(text=node["text"])
+
+                # show FIX only for pollution
+                if node["type"] == "pollution":
+                    self.fix_button.pack(pady=8)
+                else:
+                    self.fix_button.pack_forget()
+
+                self.info_box.place(x=20, y=80)
                 return
 
-    def _launch_dialog(self, scenario_id):
-        data = self.scenarios.get(scenario_id, self.scenarios[1])
-        DialogueOverlay(self, data)
+        self.current_dialog_node = None
+        self.info_box.place_forget()
 
-    def _open_pause_menu(self):
-        PauseOverlay(self, self.controller)
+    # ==================================================
+    def _fix_current_node(self):
 
+        if not self.current_dialog_node:
+            return
 
-# ── OVERLAY INTERACTIVE WIDGET COMPONENTS ──
+        node = self.current_dialog_node
 
-class DialogueOverlay(tk.Frame):
-    def __init__(self, parent, data):
-        # Uses place layout architecture to float atop the map window canvas cleanly
-        super().__init__(parent, bg=BG, highlightbackground=EMBER, highlightthickness=1)
-        self.data = data
-        self.pack_propagate(False)
-        self.place(relx=0.5, rely=0.5, width=640, height=360, anchor="center")
-        
-        # Frame Layout Labels specifications matching layout documents
-        tk.Label(self, text=data['name'].upper(), bg=BG, fg=EMBER, font=("Courier", 11, "bold")).pack(pady=(20, 10))
-        
-        msg_box = tk.Text(self, bg=BG, fg=CREAM, font=("Courier", 10), wrap="word", relief="flat")
-        msg_box.insert("1.0", data['text'])
-        msg_box.configure(state="disabled")
-        msg_box.pack(fill="both", expand=True, padx=30, pady=10)
-        
-        # Decision Context Choice Action Triggers
-        btn_frame = tk.Frame(self, bg=BG)
-        btn_frame.pack(fill="x", side="bottom", pady=20, padx=20)
-        
-        for idx, choice_key in enumerate(['choice_a', 'choice_b', 'choice_c']):
-            if data.get(choice_key):
-                tk.Button(
-                    btn_frame, text=data[choice_key].upper(), bg=BG, fg=FOG,
-                    activebackground=EMBER, activeforeground=CREAM, font=("Courier", 8),
-                    relief="flat", borderwidth=1, command=self.close
-                ).pack(side="left", expand=True, fill="x", padx=4)
+        self.fixed_nodes.add(node["id"])
 
-    def close(self):
-        self.destroy()
+        # draw checkbox/fixed marker
+        img = Image.open(
+            Path(__file__).resolve().parent.parent
+            / "assets/images/factory_fixed.png"
+        ).resize((80, 80))
 
+        tk_img = ImageTk.PhotoImage(img)
 
-class PauseOverlay(tk.Frame):
-    def __init__(self, parent, controller):
-        super().__init__(parent, bg=BG, highlightbackground=DIM, highlightthickness=2)
-        self.controller = controller
-        self.place(relx=0.5, rely=0.5, width=300, height=400, anchor="center")
-        
-        tk.Label(self, text="GAME PAUSED", bg=BG, fg=CREAM, font=("Courier", 14, "bold")).pack(pady=30)
-        
-        buttons = [
-            ("RESUME", self.close),
-            ("SETTINGS", lambda: self.controller.show_frame("SettingsScreen")),
-            ("MAIN MENU", lambda: self.controller.show_frame("MenuScreen")),
-            ("QUIT GAME", parent.quit)
-        ]
-        
-        for text, cmd in buttons:
-            tk.Button(
-                self, text=text, bg=BG, fg=FOG, activebackground=EMBER,
-                activeforeground=CREAM, font=("Courier", 10, "bold"),
-                relief="flat", width=20, command=cmd
-            ).pack(pady=12, ipady=6)
+        self.fixed_images[node["id"]] = tk_img
 
-    def close(self):
-        self.destroy()
+        self.canvas.create_image(
+            node["x"],
+            node["y"],
+            image=tk_img
+        )
+
+        self.info_box.place_forget()
+
+        self._check_win_condition()
+
+    # ==================================================
+    def _open_pause(self):
+
+        PauseMenu(self, self.controller)

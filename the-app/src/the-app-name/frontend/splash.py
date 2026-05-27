@@ -6,63 +6,128 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 ASSETS = BASE_DIR / "assets" / "images"
 
-
 BG = "#0d0800"
 
+
 class SplashScreen(tk.Frame):
+
     def __init__(self, parent, controller):
-        # Initialize as a standard frame
         super().__init__(parent, bg=BG)
+
         self.controller = controller
-        
-        # Convert BG hex code to an RGB tuple for Pillow canvas blending
-        self._bg_rgb = self._hex_to_rgb(BG)
-        
-        # Load the single combined image using Path
-        # Convert to RGBA so we can manipulate the transparency channel
-        self.original_img = Image.open(ASSETS / "splash.png").convert("RGBA")
-        
-        # 4. Create a single blank label to display the image frames
-        self.image_label = tk.Label(self, bg=BG)
-        self.image_label.pack(fill="both", expand=True)
-        
-        # 5. Run the animation sequence
+
+
+        self.image_label = tk.Label(
+            self,
+            bg=BG,
+            bd=0
+        )
+
+        self.image_label.pack(
+            fill="both",
+            expand=True
+        )
+
+
+        image_path = ASSETS / "splash.png"
+
+        try:
+            self.original_img = Image.open(image_path).convert("RGBA")
+
+        except Exception as e:
+
+            print("IMAGE LOAD ERROR:", e)
+
+            tk.Label(
+                self,
+                text="SPLASH IMAGE NOT FOUND",
+                fg="white",
+                bg=BG,
+                font=("Arial", 24)
+            ).pack(expand=True)
+
+            self.after(
+                1500,
+                lambda: self.controller.show_frame("LoginScreen")
+            )
+
+            return
+
+
+        self.after(50, self.prepare_splash)
+
+
+    def prepare_splash(self):
+
+        self.controller.update_idletasks()
+
+        win_w = self.controller.winfo_width()
+        win_h = self.controller.winfo_height()
+
+        img = self.original_img.copy()
+
+        img.thumbnail((win_w - 100, win_h - 100))
+
+        self.display_img = img
+
         self.alpha = 0.0
-        self.fade_in()
 
-    def _hex_to_rgb(self, hex_str):
-        """Converts #RRGGBB strings to an (R, G, B) integer tuple."""
-        hex_str = hex_str.lstrip('#')
-        return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+        self.draw_image()
 
-    def update_image_alpha(self, alpha_value):
-        """Blends the single splash image over your custom BG color matrix."""
-        # Create a blank background matching the custom hex color canvas
-        bg_canvas = Image.new("RGBA", self.original_img.size, self._bg_rgb + (255,))
-        
-        # Mathematically interpolate the image over the background color
-        blended = Image.blend(bg_canvas, self.original_img, alpha_value)
-        
-        # Keep a reference and push it to the label frame
+        self.after(100, self.fade_in)
+
+
+    def draw_image(self):
+
+        bg = Image.new(
+            "RGBA",
+            self.display_img.size,
+            (13, 8, 0, 255)
+        )
+
+        blended = Image.blend(
+            bg,
+            self.display_img,
+            self.alpha
+        )
+
         self.tk_img = ImageTk.PhotoImage(blended)
+
         self.image_label.configure(image=self.tk_img)
 
+        self.image_label.image = self.tk_img
+
     def fade_in(self):
-        if self.alpha < 1.0:
-            self.alpha += 0.04  # Speed of the fade loop
-            if self.alpha > 1.0: self.alpha = 1.0
-            self.update_image_alpha(self.alpha)
-            self.after(25, self.fade_in)  # ~40 FPS animation loop
+
+        self.alpha += 0.06
+
+        if self.alpha > 1:
+            self.alpha = 1
+
+        self.draw_image()
+
+        if self.alpha < 1:
+
+            self.after(30, self.fade_in)
+
         else:
-            # Fully visible. Hold still for 2.5 seconds, then fade out
-            self.after(2500, self.fade_out)
+
+            # SHORTER DISPLAY TIME
+            self.after(1800, self.fade_out)
+
 
     def fade_out(self):
-        if self.alpha > 0.0:
-            self.alpha -= 0.04
-            if self.alpha < 0.0: self.alpha = 0.0
-            self.update_image_alpha(self.alpha)
-            self.after(25, self.fade_out)
+
+        self.alpha -= 0.06
+
+        if self.alpha < 0:
+            self.alpha = 0
+
+        self.draw_image()
+
+        if self.alpha > 0:
+
+            self.after(30, self.fade_out)
+
         else:
-            # Tell the main app container to flip to the login
-            self.controller.show_frame("LoginScreen")
+            self.controller.show_frame("MainMenu")
