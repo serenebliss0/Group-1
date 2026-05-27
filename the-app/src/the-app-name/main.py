@@ -18,6 +18,7 @@ from frontend.prelude2 import Prelude2
 from frontend.prelude3 import Prelude3
 from frontend.prelude4 import Prelude4
 from frontend.prelude5 import Prelude5
+from frontend.end_screen import EndScreen
 
 logger = get_logger("Main")
 
@@ -108,6 +109,7 @@ class MainApp(tk.Tk):
             Prelude3,
             Prelude4,
             Prelude5,
+            EndScreen
         )
 
         for cls in screens:

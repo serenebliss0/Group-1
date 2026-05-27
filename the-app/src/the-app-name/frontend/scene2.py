@@ -6,6 +6,8 @@ from PIL import Image, ImageTk
 from .pause import PauseMenu
 from .game_over import GameOverScreen
 from .win_screen import WinScreen
+from backend.database import Leaderboard
+
 
 
 BG = "#1a0a00"
@@ -212,24 +214,46 @@ class Scene2(tk.Frame):
             self._trigger_game_over()
 
     # ==================================================
+        # ── Endings ────────────────────────────────────────
     def _trigger_game_over(self):
-
-        self.game_over = True
-
-        missed = [
-            n for n in self.interactive_nodes
-            if n["type"] == "pollution"
-            and n["id"] not in self.fixed_nodes
-        ]
-
-        GameOverScreen(self, self.controller, missed)
-
-    # ==================================================
+        self.game_over     = False
+        self.timer_running = False
+        fixed_count, score = self._calc_score()
+        self._save_and_submit(fixed_count, score, "ruin")
+        self.controller.pending_ending = "ruin"
+        self.controller.pending_score  = score
+        self.controller.show_frame("EndingScreen")
+ 
     def _trigger_win(self):
-
-        self.game_over = True
-        WinScreen(self, self.controller)
-
+        self.game_over     = True
+        self.timer_running = False
+        fixed_count, score = self._calc_score()
+        self._save_and_submit(fixed_count, score, "green")
+        self.controller.pending_ending = "green"
+        self.controller.pending_score  = score
+        self.controller.show_frame("EndingScreen")
+ 
+    def _calc_score(self):
+        pollution = [n for n in self.interactive_nodes if n["type"] == "pollution"]
+        fixed     = [n for n in pollution if n["id"] in self.fixed_nodes]
+        total     = len(pollution)
+        score     = int((len(fixed) / total) * 100) if total > 0 else 0
+        return len(fixed), score
+ 
+    def _save_and_submit(self, fixed_count, score, ending):
+        user        = getattr(self.controller, "current_user", "guest") or "guest"
+        time_played = self.default_time - self.time_left
+        try:
+            self.controller.db.save_run(
+                user, score, fixed_count, time_played, "normal", ending
+            )
+        except Exception as e:
+            print(f"DB save failed: {e}")
+        try:
+            lb = Leaderboard()
+            lb.submit_score(user, score, fixed_count, time_played)
+        except Exception as e:
+            print(f"Leaderboard submit failed: {e}")
     # ==================================================
     def _check_win_condition(self):
 
