@@ -16,7 +16,6 @@ class SplashScreen(tk.Frame):
 
         self.controller = controller
 
-        # ---------------- IMAGE HOLDER ---------------- #
 
         self.image_label = tk.Label(
             self,
@@ -29,7 +28,6 @@ class SplashScreen(tk.Frame):
             expand=True
         )
 
-        # ---------------- LOAD IMAGE ---------------- #
 
         image_path = ASSETS / "splash.png"
 
@@ -55,11 +53,9 @@ class SplashScreen(tk.Frame):
 
             return
 
-        # ---------------- START ---------------- #
 
         self.after(50, self.prepare_splash)
 
-    # ------------------------------------------------ #
 
     def prepare_splash(self):
 
@@ -80,7 +76,6 @@ class SplashScreen(tk.Frame):
 
         self.after(100, self.fade_in)
 
-    # ------------------------------------------------ #
 
     def draw_image(self):
 
@@ -102,8 +97,6 @@ class SplashScreen(tk.Frame):
 
         self.image_label.image = self.tk_img
 
-    # ------------------------------------------------ #
-
     def fade_in(self):
 
         self.alpha += 0.06
@@ -122,7 +115,6 @@ class SplashScreen(tk.Frame):
             # SHORTER DISPLAY TIME
             self.after(1800, self.fade_out)
 
-    # ------------------------------------------------ #
 
     def fade_out(self):
 
@@ -138,6 +130,4 @@ class SplashScreen(tk.Frame):
             self.after(30, self.fade_out)
 
         else:
-
-            # SHOW LOGIN SCREEN
-            self.controller.show_frame("LoginScreen")
+            self.controller.show_frame("MainMenu")
