@@ -66,6 +66,8 @@ class MainApp(tk.Tk):
         self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
+        #this ensures the login/signup frames only appear when no user is signed in
+        self.current_user = session.load_session()
 
 
         try:
@@ -177,6 +179,10 @@ class MainApp(tk.Tk):
 
         self.destroy()
 
+    def show_frame(self, page_name):
+        self.frames[page_name].tkraise()
+
+    print(logic.wtf_value) ## Remove this later
 
 if __name__ == "__main__":
 

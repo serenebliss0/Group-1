@@ -57,3 +57,8 @@
 2026-05-24 22:17:21,182 - INFO - [Database] - Created user tables sucessfully
 2026-05-24 22:17:21,182 - INFO - [Database] - Database initialized successfully
 2026-05-24 22:18:06,083 - WARNING - [Database] - The connection to the database was closed
+2026-05-27 21:40:02,557 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:40:02,557 - INFO - [Database] - Database initialized successfully
+2026-05-27 21:40:02,557 - INFO - [Login Handler] - Database obj was passed to loginhandler successfully
+2026-05-27 21:40:02,569 - INFO - [Database] - Created user tables sucessfully
+2026-05-27 21:40:02,569 - INFO - [Database] - Database initialized successfully
