@@ -1,3 +1,19 @@
-id,name,text,choice_a,choice_b,choice_c
-1,The Phone Board,"This circuit board was a phone. A student bought it second-hand in 2019. It stopped charging in 2022. It ended up in a pile in Alaba Market...",Examine closer,Ignore it,Leave district
-2,The Generator Wire,"This wire ran from a generator to a primary school in Bayelsa for eleven years. You carry eleven years of children learning to read.",Touch the wiring,Log entry,Walk away
+id,name,text,choice_a,choice_b,choice_c,score_a,score_b,score_c,event_id,memory
+1,Dead River,"The river smells wrong. Someone tried to clean this once. Plastic and rust float where fish used to be.",Follow the leak upstream,Collect a sample and leave,Walk away,12,-5,-10,river,0
+2,Toxic Pipe,"A pipe weeps green into the gutter. The metal is warm. You do not remember installing it.",Seal the joint with scrap,Log the coordinates,Ignore it,10,5,-8,pipe,0
+3,Dying Tree,"One leaf clings to a branch. Roots crack through asphalt — patient, stubborn, late.",Clear trash from the roots,Mark it for a planter,Pass by,8,4,-5,tree,0
+4,Water Purifier,"A purifier hums in half-sleep. Filters choked with sludge. The manual is gone.",Replace the filter mesh,Note the serial number,Shut it down,15,6,-12,purifier,0
+5,Broken Drone,"Wings folded like a dead insect. Its lens still blinks — recording nothing, remembering everything.",Download the last flight log,Strip it for parts,Leave it,6,-4,-2,drone,0
+6,Abandoned Terminal,"Screens dark. One line pulses: RESTORATION PROTOCOL — INCOMPLETE.",Run diagnostics,Copy environmental logs,Power off,7,8,-3,terminal,0
+7,Garbage Mountain,"Towers of bags and wire. The smell is a history lesson nobody wanted.",Sort and bag what's safe,Burn a path through (careless),Turn back,14,-15,-6,garbage,0
+8,Broken Streetlights,"Lamps hang like broken teeth. Cables stripped. The block hasn't seen light in years.",Reconnect what you can,Report to no one,Keep walking,5,2,-2,lights,0
+9,Warning Sign,"TOXIC — DO NOT ENTER. The paint peels. Someone crossed it out with: TOO LATE.",Read every word,Photograph and leave,Scratch it darker,-6,3,0,sign,0
+10,Memory Fragment,"A shard of glass catches your reflection. For a moment you are metal beneath skin.",Keep the fragment,Drop it in the river,Bury it near the tree,4,-2,6,memory,1
+11,The Center,"You stand where the city forgot its name. The air waits. Something in you was built for this.",Face what remains,Save strength for later,Turn back now,0,0,0,,0
+12,Ruined Fountain,"Water stains the stone. Coins rust at the bottom. Someone wished here once.",Clear the debris,Read the inscription,Move on,5,3,-3,fountain,0
+13,Cracked Billboard,"A smiling family sells air filters. The paint flakes into the wind.",Tear down the ad,Document the irony,Ignore it,4,-4,-2,billboard,0
+14,Old Journal,"Pages stick together. Entry dated the year the river turned.",Read aloud,Take it with you,Close it,6,4,-2,journal,0
+15,Broken TV,"Static hisses. A loop of green fields — stock footage from before.",Watch to the end,Unplug it,Smash the screen,3,5,-5,tv,0
+16,Forgotten Home,"Door unlocked. Photos face down. Dinner still set, grey with dust.",Restore one room,Leave supplies,Back away,9,3,-7,home,0
+17,Air Filtration,"Tower fans seized. Filters black. The city choked on its own breath.",Restart the fans,Scavenge parts,Walk past,12,4,-9,filter,0
+18,Abandoned Factory,"Conveyor belts stopped mid-shift. Chemical drums leak in slow motion.",Seal the drums,Log the chemicals,Flee,8,5,-11,factory,0

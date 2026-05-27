@@ -1,0 +1,27 @@
+BEFORE YOU INSTALL — WHAT REMAINS?
+===================================
+
+Thank you for installing What Remains? by Mynd Design Team and Semire Design Studio.
+
+SYSTEM REQUIREMENTS
+- Windows 10 or later (64-bit)
+- 200 MB free disk space
+- Internet connection recommended (for global leaderboard)
+- Display resolution: 1280x720 or higher
+
+WHAT THIS INSTALLS
+- What Remains? game application
+- Required runtime libraries
+- Game assets (images, audio, fonts)
+
+INTERNET CONNECTION
+What Remains? connects to a global leaderboard hosted on Supabase.
+This is optional — the game works fully offline, but your score
+will only appear on the local leaderboard without a connection.
+
+ANTIVIRUS NOTE
+Some antivirus software may flag newly compiled Python applications.
+This is a false positive. The installer and application are safe.
+If prompted, allow the application through your firewall.
+
+Click Next to review the license agreement.

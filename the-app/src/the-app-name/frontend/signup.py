@@ -9,7 +9,7 @@ class SignupScreen(tk.Frame):
         super().__init__(parent, bg="#0d0800")
         self.controller = controller
 
-        tk.Label(self, text="THE RUIN AND THE GREEN", bg="#0d0800", fg="#C8541A",
+        tk.Label(self, text="WHAT REMAINS?", bg="#0d0800", fg="#C8541A",
                 font=("Courier", 20, "bold")).pack(pady=(80, 5))
 
         tk.Label(self, text="Who are you?", bg="#0d0800", fg="#b8a99a",
@@ -57,7 +57,9 @@ class SignupScreen(tk.Frame):
         success = handler.register_user(username, password)
         if success:
             self.controller.current_user = username
-            self.controller.show_frame("HomeScreen")
+            from backend import session
+            session.save_session(username)
+            self.controller.show_frame("MainMenu")
             self.feedback.config(text= f"Welcome {username}")
         else:
             self.feedback.config(text="That name was taken.")

@@ -15,10 +15,6 @@ Built for **COS 102: Introduction to Problem Solving**, Pan-Atlantic University,
 
 The city is dying. You make choices. The choices have weight.
 
-Somewhere in Act II, you find a circuit board in your shoulder.
-
-Somewhere in Act III, a museum guide says she has seen you standing still in a courtyard. You have never been to a courtyard.
-
 There are three endings. One of them requires you to do nothing for two minutes.
 
 ---
@@ -38,7 +34,6 @@ There are three endings. One of them requires you to do nothing for two minutes.
 | Design | Figma |
 | Internal File Handlers | pathlib |
 | Version control | Git + GitHub |
-| Desktop Notifcations | Plyer |
 | Keybinds | JSON |
 | Log Handlers | RotatingFileHandler |
 | User Env Variables | getpass, os, sys |
@@ -139,25 +134,15 @@ pytest tests/ -v
 
 ---
 
-## The Three Endings
-
-| Ending | Condition | What happens |
-| --- | --- | --- |
-| **The Green** | Health ≥ 65, choose growth | The city breathes. The bull finds meaning. |
-| **The Ruin** | Health < 35, or choose dissolution | The plants die. The leaderboard opens itself. |
-| **The Third** | Do nothing for 120 seconds | The museum guide walks past. The game closes. |
-
----
-
 ## Team — Group 1
 
 | Name | Role | Owns |
 | --- | --- | --- |
 | Oluwasemire Ajayi | Backend Lead, Frontend, DB, Figma | `database.py`, `login_handler.py`, `scene.py`, `splash.py`, `signup_handler.py`, `logic.py`, `input_handler.py` |
 | Joseph Nnabueze | Backend, Figma | `end_screen.py` |
-| Chianugo Onyia | Frontend, Database | `menu.py`, `memory.py`, `leaderboard_screen.py` |
-| Chimdike Agugoesi | Frontend, Figma Lead | `splash.py`, `act_intro.py` |
-| Marvelous Moses-Okorie | Database, Frontend | `leaderboard_screen.py`, local score display |
+| Chianugo Onyia | Frontend, Database | `menu.py`, `memory.py` , `scene2.py`|
+| Chimdike Agugoesi | Frontend, Figma Lead | `splash.py`, `act_intro.py` , `Leaderboard.py`|
+| Marvelous Moses-Okorie | Database, Frontend | `leaderboard_screen.py`, local score display, `prologue.py` |
 | Osinachi Justin-Sonde | Assets, Settings | `settings.py`, keybind reader |
 | Kamsiyochi Ekenulo | Assets, Audio | Asset loader, sound manager, `logic.py` |
 
@@ -173,9 +158,9 @@ pytest tests/ -v
 
 ## Submission
 
-- **Deadline:** Sunday, 24 May 2026 — 6:00 PM
+- **Deadline:** Sunday, 24 May 2026 — 11:59 PM
 - **GitHub:** this repository
 - **Figma:** [Figma Design](https://www.figma.com/team_invite/redeem/1S6kFAwjXLnyI9cwW9bfLz?t=BlFt4Gxj9DvQ7M5h-21)
-- **One-page summary:** [link to be added]
+- **One-page summary:** [One Page Word doc](https://github.com/serenebliss0/Group-1/blob/main/what-remains-one-pager.docx)
 
 ---
