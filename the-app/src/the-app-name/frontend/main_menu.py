@@ -62,7 +62,7 @@ class MainMenu(Frame):
 
         canvas = Canvas(
             self,
-            bg="#0C0904",
+            bg="#000000",
             height=826,
             width=1130,
             bd=0,
